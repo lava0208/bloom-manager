@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "~components/*": ["./components/*"],
+      "~styles/*": ["./styles/*"],
+      "~sass-variables": ["./styles/variables.scss"]
+    }
+  }
+}
