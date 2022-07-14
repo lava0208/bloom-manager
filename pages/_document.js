@@ -4,7 +4,6 @@ export default function Document() {
   return (
     <Html>
       <Head>
-        <title>Bloom Manager</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <body>
