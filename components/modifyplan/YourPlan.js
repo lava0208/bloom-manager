@@ -10,8 +10,8 @@ const YourPlan = () => {
       <h2>Your Plan</h2>
 
       <div className={styles.scrollContainer}>
-        {yourPlan.map((plan) => (
-          <div className={styles.planContainer}>
+        {yourPlan.map((plan, i) => (
+          <div className={styles.planContainer} key={i}>
             <div className={styles.planHeader}>
               <h3>{plan.name}</h3>
               <h3>{plan.count}ct</h3>

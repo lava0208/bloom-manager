@@ -15,13 +15,13 @@ const Plants = () => {
         <button className={styles.searchButton}>Search</button>
       </div>
       <div className={styles.plantsContainer}>
-        {settingsPlants.map((plan) => (
-          <div className={styles.plantContainer}>
+        {settingsPlants.map((plant, i) => (
+          <div className={styles.plantContainer} key={i}>
             <div className={styles.plantImage}></div>
             <div className={styles.plantInfoContainer}>
-              <h3>{plan.name}</h3>
-              <h4>{plan.variety}</h4>
-              <h5>{plan.description}</h5>
+              <h3>{plant.name}</h3>
+              <h4>{plant.variety}</h4>
+              <h5>{plant.description}</h5>
             </div>
           </div>
         ))}

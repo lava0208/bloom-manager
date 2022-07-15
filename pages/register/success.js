@@ -11,8 +11,8 @@ const Success = () => {
   return (
     <div className={styles.screen}>
       <img className={styles.logo} src={"/assets/logo.png"} />
-      <h2>You're good to go, {name}!</h2>
-      <h3>Let's make this season the best ever.</h3>
+      <h2>You&apos;re good to go, {name}!</h2>
+      <h3>Let&apos;s make this season the best ever.</h3>
 
       <div
         className={styles.nextButtonContainer}

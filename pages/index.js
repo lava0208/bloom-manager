@@ -21,8 +21,8 @@ const Dashboard = () => {
             <h3>Welcome back, {name}!</h3>
             <h4>{moment().format("MMMM Do, YYYY")}</h4>
           </div>
-          {weather.map((stat) => (
-            <div className={styles.weatherContainer}>
+          {weather.map((stat, i) => (
+            <div className={styles.weatherContainer} key={i}>
               <i className={`wi ${stat.icon} ${styles.weatherIcon}`}></i>
               <h5>{stat.temp}°</h5>
               <h6>
@@ -54,8 +54,8 @@ const Dashboard = () => {
             <h2>PROGRESS</h2>
 
             <div className={styles.progressBarsContainer}>
-              {progress.map((category) => (
-                <>
+              {progress.map((category, i) => (
+                <React.Fragment key={i}>
                   <h5>{category.title}</h5>
                   <div className={styles.progressBarContainer}>
                     <div
@@ -63,7 +63,7 @@ const Dashboard = () => {
                       style={{ width: `${category.progress}%` }}
                     ></div>
                   </div>
-                </>
+                </React.Fragment>
               ))}
             </div>
 

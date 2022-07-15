@@ -12,8 +12,8 @@ const AvailablePlans = () => {
         <button className={styles.searchButton}>Search</button>
       </div>
       <div className={styles.plansContainer}>
-        {availablePlans.map((plan) => (
-          <div className={styles.planContainer}>
+        {availablePlans.map((plan, i) => (
+          <div className={styles.planContainer} key={i}>
             <div className={styles.planImage}></div>
             <div className={styles.planInfoContainer}>
               <h3>{plan.name}</h3>
