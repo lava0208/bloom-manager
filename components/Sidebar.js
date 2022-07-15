@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
 
 import styles from "~styles/components/sidebar.module.scss";
 
 const Sidebar = () => {
+  const [name, setName] = useState("Roger");
+
   const router = useRouter();
 
   return (
@@ -47,7 +49,7 @@ const Sidebar = () => {
         <div className={styles.accountContainer}>
           <div className={styles.profilePicture}></div>
           <div className={styles.accountInfoContainer}>
-            <h4>Roger</h4>
+            <h4>{name}</h4>
             <h5>Log Out</h5>
           </div>
         </div>
