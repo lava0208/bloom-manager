@@ -10,4 +10,18 @@
 
 .container {
   flex: 1;
+  padding: 1.5rem;
+}
+
+.header {
+  font-weight: 800;
+  font-size: 1.5rem;
+  color: $purple;
+}
+
+.subHeader {
+  font-weight: 800;
+  font-size: 2rem;
+  margin-top: 0.8rem;
+  color: $purple;
 }

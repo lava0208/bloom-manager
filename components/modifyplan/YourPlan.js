@@ -2,7 +2,7 @@ import React from "react";
 
 import { yourPlan } from "~lib/dummy";
 
-import styles from "~styles/components/yourplan.module.scss";
+import styles from "~styles/components/modifyplan/yourplan.module.scss";
 
 const YourPlan = () => {
   return (

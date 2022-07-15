@@ -3,13 +3,18 @@ import React from "react";
 import styles from "~styles/pages/modifyplan.module.scss";
 
 import Sidebar from "~components/Sidebar";
-import YourPlan from "~components/YourPlan";
+import CurrentPlan from "~components/modifyplan/CurrentPlan";
+import YourPlan from "~components/modifyplan/YourPlan";
 
 const ModifyPlan = () => {
   return (
     <div className={styles.screen}>
       <Sidebar />
-      <div className={styles.container}></div>
+      <div className={styles.container}>
+        <h1 className={styles.header}>2022 Season</h1>
+        <h2 className={styles.subHeader}>Modify Plan</h2>
+        <CurrentPlan />
+      </div>
       <YourPlan />
     </div>
   );
