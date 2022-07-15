@@ -3,12 +3,14 @@ import React from "react";
 import styles from "~styles/pages/modifyplan.module.scss";
 
 import Sidebar from "~components/Sidebar";
+import YourPlan from "~components/YourPlan";
 
 const ModifyPlan = () => {
   return (
     <div className={styles.screen}>
       <Sidebar />
-      <h2>Modify Plan</h2>
+      <div className={styles.container}></div>
+      <YourPlan />
     </div>
   );
 };
