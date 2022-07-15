@@ -29,13 +29,29 @@
 }
 
 .link {
-  color: $white;
-  font-weight: 700;
-  font-size: 1.4rem;
-  margin-bottom: 1.2rem;
+  margin-bottom: 5px;
+  padding: 0.8rem 1.5rem;
+  border-radius: 10px;
+  width: 85%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
   &:hover {
-    opacity: 0.8;
+    background: $darkBlue;
+  }
+
+  h3 {
+    color: $white;
+    font-weight: 700;
+    font-size: 1.4rem;
+    white-space: nowrap;
+  }
+  &.active {
+    background: $white;
+    h3 {
+      color: $blue;
+    }
   }
 }
 
@@ -52,6 +68,7 @@
   align-items: center;
   background: $purple;
   padding: 1rem;
+  margin-top: 1rem;
 }
 
 .profilePicture {

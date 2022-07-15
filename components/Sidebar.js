@@ -10,23 +10,40 @@ const Sidebar = () => {
     <div className={styles.container}>
       <div className={styles.top}>
         <img src={"/assets/logo.png"} />
-        <h3 className={styles.link} onClick={() => router.push("/")}>
-          Dashboard
-        </h3>
-        <h3 className={styles.link} onClick={() => router.push("/masterplan")}>
-          Master Plan
-        </h3>
+        <div
+          className={`${styles.link} ${
+            router.pathname === "/" ? styles.active : null
+          }`}
+          onClick={() => router.push("/")}
+        >
+          <h3>Dashboard</h3>
+        </div>
+        <div
+          className={`${styles.link} ${
+            router.pathname === "/masterplan" ? styles.active : null
+          }`}
+          onClick={() => router.push("/masterplan")}
+        >
+          <h3>Master Plan</h3>
+        </div>
       </div>
       <div className={styles.bottom}>
-        <h3 className={styles.link} onClick={() => router.push("/modifyplan")}>
-          Modify Plan
-        </h3>
-        <h3
-          className={styles.link}
+        <div
+          className={`${styles.link} ${
+            router.pathname === "/modifyplan" ? styles.active : null
+          }`}
+          onClick={() => router.push("/modifyplan")}
+        >
+          <h3>Modify Plan</h3>
+        </div>
+        <div
+          className={`${styles.link} ${
+            router.pathname === "/plantsettings" ? styles.active : null
+          }`}
           onClick={() => router.push("/plantsettings")}
         >
-          Plant Settings
-        </h3>
+          <h3>Plant Settings</h3>
+        </div>
         <div className={styles.accountContainer}>
           <div className={styles.profilePicture}></div>
           <div className={styles.accountInfoContainer}>

@@ -2,7 +2,7 @@ import React from "react";
 
 import styles from "~styles/pages/masterplan.module.scss";
 
-import Sidebar from "~components/sidebar";
+import Sidebar from "~components/Sidebar";
 
 const MasterPlan = () => {
   return (
