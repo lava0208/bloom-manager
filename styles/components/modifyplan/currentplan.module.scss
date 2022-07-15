@@ -1,7 +1,7 @@
 @import "~sass-variables";
 
 .container {
-  margin-top: 3rem;
+  margin-top: 2rem;
 }
 
 .currentPlanContainer {
@@ -15,7 +15,7 @@
 .planDetailsContainer,
 .planOptionsContainer {
   background: $white;
-  flex: 1;
+  width: 50%;
   border-radius: 30px;
   overflow: hidden;
 }
