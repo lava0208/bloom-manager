@@ -97,6 +97,10 @@
   border-radius: 50px;
   padding: 10px 1.5rem;
   margin-top: 0.5rem;
+  cursor: pointer;
+  &:hover {
+    opacity: 0.8;
+  }
 }
 
 .plantsContainer {
