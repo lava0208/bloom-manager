@@ -1,9 +1,12 @@
 import React, { useState } from "react";
+import { useRouter } from "next/router";
 
 import styles from "~styles/pages/register/success.module.scss";
 
 const Success = () => {
   const [name, setName] = useState("Sally");
+
+  const router = useRouter();
 
   return (
     <div className={styles.screen}>
@@ -11,7 +14,10 @@ const Success = () => {
       <h2>You're good to go, {name}!</h2>
       <h3>Let's make this season the best ever.</h3>
 
-      <div className={styles.nextButtonContainer}>
+      <div
+        className={styles.nextButtonContainer}
+        onClick={() => router.push("/")}
+      >
         <h5>Plan Season</h5>
       </div>
     </div>
