@@ -8,7 +8,10 @@ const MasterPlan = () => {
   return (
     <div className={styles.screen}>
       <Sidebar />
-      <h2>Master Plan</h2>
+      <div className={styles.container}>
+        <h1 className={styles.header}>2022 Season</h1>
+        <h2 className={styles.subHeader}>Master Plan</h2>
+      </div>
     </div>
   );
 };
