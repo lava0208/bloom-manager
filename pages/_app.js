@@ -1,4 +1,5 @@
 import "../styles/globals.scss";
+import "weather-icons/css/weather-icons.css";
 import PageHead from "~components/PageHead";
 
 function MyApp({ Component, pageProps }) {
