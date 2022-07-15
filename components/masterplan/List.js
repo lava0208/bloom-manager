@@ -57,8 +57,8 @@ const List = () => {
       <div className={styles.thisWeekContainer}>
         <h2>This Week</h2>
         <div className={styles.thisWeekScrollContainer}>
-          {list.thisWeek.map((task) => (
-            <div className={styles.thisWeekTaskContainer}>
+          {list.thisWeek.map((task, i) => (
+            <div className={styles.thisWeekTaskContainer} key={i}>
               <h3>{task.name}</h3>
               <h4>{moment(task.date).format("dddd t\\h\\e Do")}</h4>
             </div>
