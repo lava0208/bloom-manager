@@ -9,14 +9,18 @@
   align-items: center;
 }
 
+.logo {
+  width: 10rem;
+}
+
 .formContainer {
   background: $yellow;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 2.5rem 0;
+  margin: 3rem 0;
   border-radius: 54px;
-  padding: 2.5rem 2rem;
+  padding: 3.5rem 2rem;
   width: 35rem;
   h2 {
     font-weight: 800;

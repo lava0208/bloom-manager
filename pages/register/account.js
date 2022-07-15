@@ -12,8 +12,7 @@ const Farm = () => {
 
   return (
     <div className={styles.screen}>
-      <h1>LOGO</h1>
-      {/* <img className={styles.logo} /> */}
+      <img className={styles.logo} src={"/assets/logo.png"} />
       <div className={styles.formContainer}>
         <h2>Setup your account.</h2>
 

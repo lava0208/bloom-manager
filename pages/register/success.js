@@ -7,9 +7,7 @@ const Success = () => {
 
   return (
     <div className={styles.screen}>
-      <h1>LOGO</h1>
-      {/* <img className={styles.logo}/> */}
-
+      <img className={styles.logo} src={"/assets/logo.png"} />
       <h2>You're good to go, {name}!</h2>
       <h3>Let's make this season the best ever.</h3>
 
