@@ -44,6 +44,16 @@ const CalendarTab = () => {
     });
   };
 
+  const moveEvent = ({ event, start, end }) => {
+    const idx = events.indexOf(event);
+    const updatedEvent = { ...event, start, end };
+
+    const nextEvents = [...events];
+    nextEvents.splice(idx, 1, updatedEvent);
+
+    setEvents(nextEvents);
+  };
+
   const eventStyleGetter = (event) => {
     let backgroundColor = "";
     switch (event.type) {
@@ -75,8 +85,10 @@ const CalendarTab = () => {
       <Calendar
         localizer={localizer}
         events={events}
-        onEventDrop={onEventResize}
+        onEventDrop={moveEvent}
         eventPropGetter={eventStyleGetter}
+        onEventResize={onEventResize}
+        resizeAble
         startAccessor="start"
         endAccessor="end"
       />
