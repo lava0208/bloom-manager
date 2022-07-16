@@ -8,6 +8,8 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 
 import styles from "~styles/components/masterplan/calendar.module.scss";
 
+import CalendarToolbar from "~components/masterplan/CalendarToolbar";
+
 const CalendarTab = () => {
   const [events, setEvents] = useState([
     {
@@ -88,7 +90,8 @@ const CalendarTab = () => {
         onEventDrop={moveEvent}
         eventPropGetter={eventStyleGetter}
         onEventResize={onEventResize}
-        resizeAble
+        resizeable
+        components={{ toolbar: CalendarToolbar }}
         startAccessor="start"
         endAccessor="end"
       />
