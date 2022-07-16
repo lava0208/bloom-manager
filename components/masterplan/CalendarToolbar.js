@@ -15,8 +15,6 @@ const CalendarToolbar = (props) => {
     const d = date.getDate();
     const m = date.getMonth();
 
-    console.log(m);
-
     let newMonth = m + months;
     if (newMonth < 0) {
       newMonth = 11;
@@ -44,17 +42,17 @@ const CalendarToolbar = (props) => {
 
   return (
     <div className={styles.container}>
-      <button onClick={goToBack}>
+      <h3 className={styles.monthButton} onClick={goToBack}>
         {currentMonth - 1 < 0
           ? calendarMonths[calendarMonths.length - 1]
           : calendarMonths[currentMonth - 1]}
-      </button>
-      <button>{calendarMonths[currentMonth]}</button>
-      <button onClick={goToNext}>
+      </h3>
+      <h2 className={styles.currentMonth}>{calendarMonths[currentMonth]}</h2>
+      <h3 className={styles.monthButton} onClick={goToNext}>
         {currentMonth + 1 >= calendarMonths.length
           ? calendarMonths[0]
           : calendarMonths[currentMonth + 1]}
-      </button>
+      </h3>
     </div>
   );
 };

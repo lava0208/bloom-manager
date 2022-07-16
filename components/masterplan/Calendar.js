@@ -14,20 +14,20 @@ const CalendarTab = () => {
   const [events, setEvents] = useState([
     {
       start: moment().toDate(),
-      end: moment().add(1, "days").toDate(),
-      title: "Some title",
+      end: moment().toDate(),
+      title: "Start Zinnia",
       type: "start",
     },
     {
       start: moment().toDate(),
       end: moment().add(1, "days").toDate(),
-      title: "Some title",
+      title: "Harden off Lisianthus",
       type: "harden",
     },
     {
-      start: moment().toDate(),
-      end: moment().add(1, "days").toDate(),
-      title: "Some title",
+      start: moment("2022-07-10T17:31:19+00:00").toDate(),
+      end: moment("2022-07-10T17:31:19+00:00").add(1, "days").toDate(),
+      title: "Transplant Lisianthus",
       type: "transplant",
     },
   ]);

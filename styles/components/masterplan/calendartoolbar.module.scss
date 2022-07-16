@@ -5,4 +5,21 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.currentMonth {
+  font-weight: 800;
+  width: 10rem;
+  text-align: center;
+}
+
+.monthButton {
+  color: $blueGrey;
+  width: 10rem;
+  text-align: center;
+  cursor: pointer;
+  &:hover {
+    opacity: 0.8;
+  }
 }
