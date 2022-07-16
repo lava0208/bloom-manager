@@ -91,6 +91,7 @@ const CalendarTab = () => {
         eventPropGetter={eventStyleGetter}
         onEventResize={onEventResize}
         resizeable
+        showAllEvents
         components={{ toolbar: CalendarToolbar }}
         startAccessor="start"
         endAccessor="end"
