@@ -13,18 +13,21 @@ import CalendarToolbar from "~components/masterplan/CalendarToolbar";
 const CalendarTab = () => {
   const [events, setEvents] = useState([
     {
+      id: 1,
       start: moment().toDate(),
       end: moment().toDate(),
       title: "Start Zinnia",
       type: "start",
     },
     {
+      id: 2,
       start: moment().toDate(),
       end: moment().add(1, "days").toDate(),
       title: "Harden off Lisianthus",
       type: "harden",
     },
     {
+      id: 3,
       start: moment("2022-07-10T17:31:19+00:00").toDate(),
       end: moment("2022-07-10T17:31:19+00:00").add(1, "days").toDate(),
       title: "Transplant Lisianthus",
@@ -36,17 +39,17 @@ const CalendarTab = () => {
 
   const localizer = momentLocalizer(moment);
 
-  const onEventResize = (data) => {
-    const { start, end } = data;
-
-    setEvents((state) => {
-      state[0].start = start;
-      state[0].end = end;
-      return [...state];
+  const onEventResize = ({ event, start, end }) => {
+    const nextEvents = events.map((existingEvent) => {
+      return existingEvent.id == event.id
+        ? { ...existingEvent, start, end }
+        : existingEvent;
     });
+
+    setEvents(nextEvents);
   };
 
-  const moveEvent = ({ event, start, end }) => {
+  const onEventDrop = ({ event, start, end }) => {
     const idx = events.indexOf(event);
     const updatedEvent = { ...event, start, end };
 
@@ -87,11 +90,12 @@ const CalendarTab = () => {
       <Calendar
         localizer={localizer}
         events={events}
-        onEventDrop={moveEvent}
+        onEventDrop={onEventDrop}
         eventPropGetter={eventStyleGetter}
         onEventResize={onEventResize}
         resizeable
         showAllEvents
+        selectable
         components={{ toolbar: CalendarToolbar }}
         startAccessor="start"
         endAccessor="end"
