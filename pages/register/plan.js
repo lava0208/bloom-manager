@@ -4,17 +4,19 @@ import { useRouter } from "next/router";
 
 import styles from "~styles/pages/register/account.module.scss";
 
-const Farm = () => {
+const Plan = () => {
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [location, setLocation] = useState("");
+  const [size, setSize] = useState("");
+  const [lastDate, setLastDate] = useState("");
+  const [firstDate, setFirstDate] = useState("");
   const [error, setError] = useState(false);
 
   const router = useRouter();
   
   const register = () => {
-    if(name !== "" && email !== "" && password !== ""){
-      router.push("/register/plan")
+    if(name !== "" && location !== "" && size !== ""){
+      router.push("/register/success")
     }else{
       setError(true);
     }
@@ -24,34 +26,50 @@ const Farm = () => {
     <div className={styles.screen}>
       <img className={styles.logo} src={"/assets/logo.png"} alt="logo" />
       <div className={styles.formContainer}>
-        <h2>Setup your account.</h2>
+        <h2>Tell us about your plan.</h2>
+
+        <input
+          type="text"
+          className={styles.input}
+          placeholder="Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
 
         <div className={styles.formDetailsContainer}>
           <div className={styles.detailsInputsContainer}>
             <input
               type="text"
               className={styles.input}
-              placeholder="Your Name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              placeholder="Location"
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
             />
             <input
               type="text"
               className={styles.input}
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Size"
+              value={size}
+              onChange={(e) => setSize(e.target.value)}
             />
           </div>
-          <div className={styles.detailsProfilePictureContainer}></div>
+          <div className={styles.detailsLocationContainer}></div>
         </div>
 
         <input
-          type="password"
+          type="text"
           className={styles.input}
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Last Frost date"
+          value={lastDate}
+          onChange={(e) => setLastDate(e.target.value)}
+        />
+        
+        <input
+          type="text"
+          className={styles.input}
+          placeholder="First Frost date"
+          value={firstDate}
+          onChange={(e) => setFirstDate(e.target.value)}
         />
         {
           error && (
@@ -71,4 +89,4 @@ const Farm = () => {
   );
 };
 
-export default Farm;
+export default Plan;
