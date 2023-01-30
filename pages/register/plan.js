@@ -16,7 +16,7 @@ const Plan = () => {
   
   const register = () => {
     if(name !== "" && location !== "" && size !== ""){
-      router.push("/register/success")
+      router.push("/register/payment")
     }else{
       setError(true);
     }
