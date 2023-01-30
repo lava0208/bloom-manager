@@ -1,7 +1,8 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useState } from "react";
 import moment from "moment";
 
-import { weather, accountStats, progress } from "~lib/dummy";
+import { weather, accountStats, progress, blooms } from "~lib/dummy";
 
 import styles from "~styles/pages/dashboard.module.scss";
 
@@ -50,6 +51,22 @@ const Dashboard = () => {
           </div>
         </div>
         <div className={styles.dashboardRow}>
+          <div className={styles.blooms}>
+            <h2>BLOOMS</h2>
+            <h4>NEXT WEEK</h4>
+            <div className={styles.bloomsContainer}>
+              {blooms.map((bloom, i) => (
+                <div className={styles.bloomContainer} key={i}>
+                  <img className={styles.background} src={'/assets/' + bloom.image} alt={bloom.title} />
+                  <div className={styles.bloomInfoContainer}>
+                    <h4>{bloom.title}</h4>
+                    <h5>{bloom.description}</h5>
+                    <button className={styles.bloomButton}>{bloom.plants} plants</button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
           <div className={styles.progressContainer}>
             <h2>PROGRESS</h2>
 
@@ -68,11 +85,6 @@ const Dashboard = () => {
             </div>
 
             <button className={styles.shareButton}>SHARE</button>
-          </div>
-
-          <div className={styles.dashboardImagesContainer}>
-            <div className={styles.dashboardImage}></div>
-            <div className={styles.dashboardImage}></div>
           </div>
         </div>
       </div>

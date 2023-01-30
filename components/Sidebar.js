@@ -49,7 +49,7 @@ const Sidebar = () => {
         </div>
         <div className={styles.accountContainer}>
           <div className={styles.profilePicture}></div>
-          <div className={styles.accountInfoContainer}>
+          <div className={styles.accountInfoContainer} onClick={() => router.push("/register/account")}>
             <h4>{name}</h4>
             <h5>Log Out</h5>
           </div>
