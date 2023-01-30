@@ -15,7 +15,7 @@ const Sidebar = () => {
         <img src={"/assets/logo.png"} alt="logo" />        
         <div
           className={`${styles.link} ${
-            router.pathname === "/masterplan" ? styles.active : null
+            router.pathname === "/masterplan" ? styles.active : styles.deactive
           }`}
           onClick={() => router.push("/masterplan")}
         >

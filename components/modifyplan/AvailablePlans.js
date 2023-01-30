@@ -9,7 +9,7 @@ const AvailablePlans = () => {
     <>
       <div className={styles.headerContainer}>
         <h2>Available</h2>
-        <button className={styles.searchButton}>Search</button>
+        <input className={styles.searchButton} placeholder={'Search'} />
       </div>
       <div className={styles.plansContainer}>
         {availablePlans.map((plan, i) => (
