@@ -3,7 +3,7 @@ import React from "react";
 import styles from "~styles/pages/modifyplan.module.scss";
 
 import Sidebar from "~components/Sidebar";
-import CurrentPlan from "~components/modifyplan/CurrentPlan";
+// import CurrentPlan from "~components/modifyplan/CurrentPlan";
 import AvailablePlans from "~components/modifyplan/AvailablePlans";
 import YourPlan from "~components/modifyplan/YourPlan";
 
@@ -12,9 +12,9 @@ const ModifyPlan = () => {
     <div className={styles.screen}>
       <Sidebar />
       <div className={styles.container}>
-        <h1 className={styles.header}>2022 Season</h1>
+        <h1 className={styles.header}>2023 Plan</h1>
         <h2 className={styles.subHeader}>Modify Plan</h2>
-        <CurrentPlan />
+        {/* <CurrentPlan /> */}
         <AvailablePlans />
       </div>
       <YourPlan />

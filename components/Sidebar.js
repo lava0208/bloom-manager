@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 
@@ -11,7 +12,17 @@ const Sidebar = () => {
   return (
     <div className={styles.container}>
       <div className={styles.top}>
-        <img src={"/assets/logo.png"} />
+        <img src={"/assets/logo.png"} alt="logo" />        
+        <div
+          className={`${styles.link} ${
+            router.pathname === "/masterplan" ? styles.active : null
+          }`}
+          onClick={() => router.push("/masterplan")}
+        >
+          <h3>2023 Plan</h3>
+        </div>
+      </div>
+      <div className={styles.bottom}>
         <div
           className={`${styles.link} ${
             router.pathname === "/" ? styles.active : null
@@ -20,16 +31,6 @@ const Sidebar = () => {
         >
           <h3>Dashboard</h3>
         </div>
-        <div
-          className={`${styles.link} ${
-            router.pathname === "/masterplan" ? styles.active : null
-          }`}
-          onClick={() => router.push("/masterplan")}
-        >
-          <h3>Master Plan</h3>
-        </div>
-      </div>
-      <div className={styles.bottom}>
         <div
           className={`${styles.link} ${
             router.pathname === "/modifyplan" ? styles.active : null

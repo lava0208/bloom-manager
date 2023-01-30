@@ -9,7 +9,6 @@ const Plants = () => {
     <>
       <div className={styles.headerContainer}>
         <div className={styles.addCustomContainer}>
-          <h2>Plants</h2>
           <button>Add New Custom</button>
         </div>
         <button className={styles.searchButton}>Search</button>
