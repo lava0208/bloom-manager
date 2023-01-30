@@ -72,9 +72,9 @@ const Dashboard = () => {
 
             <div className={styles.progressBarsContainer}>
               {progress.map((category, i) => (
-                <React.Fragment key={i}>
-                  <h5>{category.title}</h5>
+                <React.Fragment key={i}>                  
                   <div className={styles.progressBarContainer}>
+                    <h5 style={{ width: `${category.progress}%` }}>{category.title}</h5>
                     <div
                       className={styles.progressBarProgress}
                       style={{ width: `${category.progress}%` }}
