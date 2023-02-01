@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 
@@ -14,7 +15,7 @@ const Farm = () => {
 
   return (
     <div className={styles.screen}>
-      <img className={styles.logo} src={"/assets/logo.png"} />
+      <img className={styles.logo} src={"/assets/logo.png"} alt="logo"/>
       <div className={styles.formContainer}>
         <h2>Tell us about your farm.</h2>
         <h3>{`(or garden!)`}</h3>
