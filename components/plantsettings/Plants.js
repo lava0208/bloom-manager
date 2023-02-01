@@ -31,6 +31,7 @@ const Plants = () => {
     const [harvestNote, setHarvestNote] = useState('');
 
     const [modalOpen, setModalOpen] = useState(false);
+    const [isShowActionText, setIsShowActionText] = useState(-1);
     const openCreateModal = () => {
         setModalOpen(true);
     }
@@ -44,13 +45,21 @@ const Plants = () => {
             </div>
             <div className={styles.plantsContainer}>
                 {settingsPlants.map((plant, i) => (
-                    <div className={styles.plantContainer} key={i}>
+                    <div className={styles.plantContainer} key={i} onMouseEnter={() => setIsShowActionText(i)} onMouseLeave={() => setIsShowActionText(-1)}>
                         <div className={styles.plantImage}></div>
                         <div className={styles.plantInfoContainer}>
                             <h3>{plant.name}</h3>
                             <h4>{plant.variety}</h4>
                             <h5>{plant.description}</h5>
                         </div>
+                        {
+                            i === isShowActionText && (
+                                <div className={styles.plantHoverText}>
+                                    <button onClick={() => openCreateModal()}>Edit</button>
+                                    <button>Remove</button>
+                                </div>
+                            )
+                        }
                     </div>
                 ))}
             </div>
