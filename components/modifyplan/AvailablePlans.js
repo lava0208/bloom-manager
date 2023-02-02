@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Modal, ModalHeader, ModalBody } from "reactstrap";
+import { Modal, ModalBody } from "reactstrap";
 
 import { availablePlans } from "~lib/dummy";
 import CurrentPlan from "./CurrentPlan";
