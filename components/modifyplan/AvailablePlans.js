@@ -39,11 +39,8 @@ const AvailablePlans = () => {
                 ))}
             </div>
             <Modal toggle={() => setModalOpen(!modalOpen)} isOpen={modalOpen} centered modalClassName="modifyPlanModal">
-                <ModalHeader>
-                    Add <i>Crimson Glory</i>
-                </ModalHeader>
                 <ModalBody>
-                    <CurrentPlan />
+                    <CurrentPlan title="Add Crimson Glory" />
                 </ModalBody>
             </Modal>
         </>

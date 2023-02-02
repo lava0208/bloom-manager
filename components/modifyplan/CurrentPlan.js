@@ -4,13 +4,16 @@ import { currentPlan } from "~lib/dummy";
 
 import styles from "~styles/components/modifyplan/currentplan.module.scss";
 
-const CurrentPlan = () => {
+const CurrentPlan = (props) => {
   const [pinchCheckbox, setPinchCheckbox] = useState(false);
   const [potCheckbox, setPotCheckbox] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
 
   return (
     <div className={styles.container}>
+      <div className="modal-header">
+        <h5 className="modal-title">{props.title}</h5>
+      </div>
       <div className={styles.currentPlanContainer}>
         <div className={styles.planDetailsContainer}>
           <div className={styles.planImage}></div>
