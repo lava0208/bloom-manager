@@ -28,8 +28,11 @@ h6 {
   color: $black;
 }
 
-.modal-dialog{
+.customPlantModal .modal-dialog{
   max-width: 950px!important;
+}
+
+.modal-dialog{
   .modal-content{
     background-color: $blue!important;
     h1, h2, h3, h4, h5, h6{

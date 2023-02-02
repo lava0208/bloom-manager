@@ -3,15 +3,21 @@ import { Modal, ModalBody } from "reactstrap";
 
 import { yourPlan } from "~lib/dummy";
 import CurrentPlan from "./CurrentPlan";
+import UserSettings from "~components/plantsettings/UserSettings";
 
 import 'bootstrap/dist/css/bootstrap.css';
 import styles from "~styles/components/modifyplan/yourplan.module.scss";
 
 const YourPlan = () => {
-    const [modalOpen, setModalOpen] = useState(false);
+    const [planEditModalOpen, setPlanEditModalOpen] = useState(false);
     const [isShowActionText, setIsShowActionText] = useState(-1);
-    const openCreateModal = () => {
-        setModalOpen(true);
+    const openPlanEditModal = () => {
+        setPlanEditModalOpen(true);
+    }
+
+    const [planSettingsModalOpen, setPlanSettingsModalOpen] = useState(false);
+    const openPlanSettingsModal = () => {
+        setPlanSettingsModalOpen(true);
     }
     return (
         <>
@@ -37,17 +43,26 @@ const YourPlan = () => {
                                 i === isShowActionText && (
                                     <div className={styles.plantHoverText}>
                                         <button>Delete</button>
-                                        <button onClick={() => openCreateModal()}>Edit</button>
+                                        <button onClick={() => openPlanEditModal()}>Edit</button>
                                     </div>
                                 )
                             }
                         </div>
                     ))}
                 </div>
+
+                <div className={styles.planSettings} onClick={() => openPlanSettingsModal()}>
+                    <h3>Plan Settings</h3>
+                </div>
             </div>
-            <Modal toggle={() => setModalOpen(!modalOpen)} isOpen={modalOpen} centered modalClassName="modifyPlanModal">
+            <Modal toggle={() => setPlanEditModalOpen(!planEditModalOpen)} isOpen={planEditModalOpen} centered modalClassName="modifyPlanModal">
                 <ModalBody>
                     <CurrentPlan title="Edit Crimson Glory" />
+                </ModalBody>
+            </Modal>
+            <Modal toggle={() => setPlanSettingsModalOpen(!planSettingsModalOpen)} isOpen={planSettingsModalOpen} centered>
+                <ModalBody>
+                    <UserSettings />
                 </ModalBody>
             </Modal>
         </>
