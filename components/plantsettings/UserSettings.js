@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import styles from "~styles/components/plantsettings/userSettings.module.scss";
 
-const UserSettings = () => {
+const UserSettings = (props) => {
     const [userSettings, setUserSettings] = useState({
         lastFrost: "",
         firstFrost: "",
@@ -57,8 +57,8 @@ const UserSettings = () => {
                         <div className={styles.map}></div>
                     </div>
                 </div>
-                <button className={styles.settingsButton}>Save Changes</button>
-                <button className={styles.settingsButton}>Cancel</button>
+                <button className={styles.settingsButton} onClick = {props.saveSetting}>Save Changes</button>
+                <button className={styles.settingsButton} onClick = {props.cancelSetting}>Cancel</button>
             </div>
         </div>
     );

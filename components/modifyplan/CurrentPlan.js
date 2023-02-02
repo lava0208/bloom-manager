@@ -7,7 +7,6 @@ import styles from "~styles/components/modifyplan/currentplan.module.scss";
 const CurrentPlan = (props) => {
     const [pinchCheckbox, setPinchCheckbox] = useState(false);
     const [potCheckbox, setPotCheckbox] = useState(false);
-    const [modalOpen, setModalOpen] = useState(false);
 
     return (
         <div className={styles.container}>
@@ -72,8 +71,8 @@ const CurrentPlan = (props) => {
                 </div>
             </div>
             <div className={styles.buttonsContainer}>
-                <button onClick={() => setModalOpen(!modalOpen)}>Save Changes</button>
-                <button onClick={() => setModalOpen(!modalOpen)}>Reset</button>
+                <button onClick={props.savePlan}>Save Changes</button>
+                <button onClick={props.resetPlan}>Reset</button>
             </div>
         </div>
     );

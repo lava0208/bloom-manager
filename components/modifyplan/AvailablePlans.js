@@ -13,6 +13,12 @@ const AvailablePlans = () => {
     const openCreateModal = () => {
         setModalOpen(true);
     }
+    const savePlan = () => {
+        setModalOpen(false);
+    }
+    const resetPlan = () => {
+        setModalOpen(false);
+    }
     return (
         <>
             <div className={styles.headerContainer}>
@@ -40,7 +46,7 @@ const AvailablePlans = () => {
             </div>
             <Modal toggle={() => setModalOpen(!modalOpen)} isOpen={modalOpen} centered modalClassName="modifyPlanModal">
                 <ModalBody>
-                    <CurrentPlan title="Add Crimson Glory" />
+                    <CurrentPlan title="Add Crimson Glory" savePlan={savePlan} resetPlan={resetPlan} />
                 </ModalBody>
             </Modal>
         </>

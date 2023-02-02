@@ -14,10 +14,22 @@ const YourPlan = () => {
     const openPlanEditModal = () => {
         setPlanEditModalOpen(true);
     }
+    const savePlan = () => {
+        setPlanEditModalOpen(false);
+    }
+    const resetPlan = () => {
+        setPlanEditModalOpen(false);
+    }
 
     const [planSettingsModalOpen, setPlanSettingsModalOpen] = useState(false);
     const openPlanSettingsModal = () => {
         setPlanSettingsModalOpen(true);
+    }
+    const saveSetting = () => {
+        setPlanSettingsModalOpen(false)
+    }
+    const cancelSetting = () => {
+        setPlanSettingsModalOpen(false)
     }
     return (
         <>
@@ -57,12 +69,12 @@ const YourPlan = () => {
             </div>
             <Modal toggle={() => setPlanEditModalOpen(!planEditModalOpen)} isOpen={planEditModalOpen} centered modalClassName="modifyPlanModal">
                 <ModalBody>
-                    <CurrentPlan title="Edit Crimson Glory" />
+                    <CurrentPlan title="Edit Crimson Glory" savePlan={savePlan} resetPlan={resetPlan} />
                 </ModalBody>
             </Modal>
             <Modal toggle={() => setPlanSettingsModalOpen(!planSettingsModalOpen)} isOpen={planSettingsModalOpen} centered>
                 <ModalBody>
-                    <UserSettings />
+                    <UserSettings saveSetting={saveSetting} cancelSetting={cancelSetting} />
                 </ModalBody>
             </Modal>
         </>
