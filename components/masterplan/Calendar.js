@@ -114,7 +114,6 @@ const CalendarTab = () => {
     const [schedule, setSchedule] = useState({});
 
     const chooseEvent = (event) => {
-        console.log(event);
         setSchedule(event);
         setModalOpen(true);
     }

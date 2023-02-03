@@ -1,10 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { byPlant } from "~lib/dummy";
+import { Modal, ModalBody } from "reactstrap";
 
+import 'bootstrap/dist/css/bootstrap.css';
 import styles from "~styles/components/masterplan/byplant.module.scss";
 
+import ByPlantDetail from "./ByPlantDetail";
+
 const ByPlant = () => {
+    const [modalOpen, setModalOpen] = useState(false);
+    const savePlant = () => {
+        setModalOpen(false);
+    }
+    const cancelPlant = () => {
+        setModalOpen(false);
+    }
+    const [activePlant, setActivePlant] = useState({});
     return (
         <div className={styles.container}>
             <div className={styles.headerContainer}>
@@ -20,7 +32,7 @@ const ByPlant = () => {
                                 <div className={styles.plantInfoHeader}>
                                     <div>
                                         <h3>{plant.name}</h3>
-                                        <h5>{plant.description}</h5>
+                                        <h5>{plant.user}</h5>
                                     </div>
                                     <h4>{plant.unit}ct</h4>
                                 </div>
@@ -32,12 +44,17 @@ const ByPlant = () => {
                                 </div>
                             </div>
                             <div className={styles.plantInfoFooterContainer}>
-                                <button>View & Edit</button>
+                                <button onClick={() => {setModalOpen(true); setActivePlant(plant)}}>View & Edit</button>
                             </div>
                         </div>
                     </div>
                 ))}
             </div>
+            <Modal toggle={() => setModalOpen(!modalOpen)} isOpen={modalOpen} centered modalClassName="modifyPlanModal">
+                <ModalBody>
+                    <ByPlantDetail activePlant={activePlant} savePlant={savePlant} cancelPlant={cancelPlant} />
+                </ModalBody>
+            </Modal>
         </div>
     );
 };
