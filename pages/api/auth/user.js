@@ -7,6 +7,7 @@ export default async function handler(req, res) {
     const db = client.db("bloom");
 
     switch (req.method) {
+        //... login api
         case "POST":
             let user = await db.collection("users").find({ email: req.body.email }).toArray();
             if (user.length !== 0) {
@@ -22,6 +23,13 @@ export default async function handler(req, res) {
             } else {
                 return res.json({ status: false, message: 'Email and/or password are not correct!' });
             }
+
+        //... get profile info
+        case "GET":
+            let profile = await db.collection("users").findOne({_id: new ObjectId(req.query)});
+            return res.json({ status: true, data: profile });
+            
+        //... update profile
         case "PUT":
             const { id } = req.query;
             await db.collection("users").updateOne(
