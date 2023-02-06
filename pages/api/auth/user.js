@@ -38,7 +38,7 @@ export default async function handler(req, res) {
                 },
                 {
                     $set: {
-                        fullname: req.body.fullname,
+                        name: req.body.name,
                         email: req.body.email,
                         password: bcrypt.hashSync(req.body.password, 10),
                         email_newsletter: req.body.email_newsletter,
