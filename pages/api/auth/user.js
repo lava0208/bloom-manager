@@ -7,7 +7,7 @@ export default async function handler(req, res) {
     const db = client.db("bloom");
 
     switch (req.method) {
-        //... login api
+        //... login
         case "POST":
             let user = await db.collection("users").find({ email: req.body.email }).toArray();
             if (user.length !== 0) {
@@ -28,7 +28,7 @@ export default async function handler(req, res) {
         case "GET":
             let profile = await db.collection("users").findOne({_id: new ObjectId(req.query)});
             return res.json({ status: true, data: profile });
-            
+
         //... update profile
         case "PUT":
             const { id } = req.query;
@@ -47,5 +47,10 @@ export default async function handler(req, res) {
                 }
             );
             return res.json({ status: true, message: 'The profile is updated successfully.' });
+
+        //... delete user
+        case "DELETE":
+            await db.collection("users").deleteOne({_id: new ObjectId(req.query)});
+            return res.json({ status: true, message: 'The account is closed successfully.' });
     }
 }
