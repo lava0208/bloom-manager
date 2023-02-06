@@ -1,4 +1,5 @@
 import clientPromise from "../../../lib/mongodb";
+import bcrypt from "bcryptjs";
 
 export default async function handler(req, res) {
     const client = await clientPromise;
@@ -8,10 +9,11 @@ export default async function handler(req, res) {
         case "POST":
             let existUser = await db.collection("users").find({email: req.body.email}).toArray();
             if(existUser.length !== 0){
-                return res.json({ status: 400, message: 'Another account already exists for this email address!' });    
+                return res.json({ status: false, message: 'Another account already exists for this email address!' });    
             }else{
-                let newUser = await db.collection("users").insertOne(req.body);
-                return res.json({ status: 200, data: newUser });
-            }            
+                req.body.password = bcrypt.hashSync(req.body.password, 10);
+                await db.collection("users").insertOne(req.body);
+                return res.json({ status: true, data: 'The user is registered successfully.' });
+            }
     }
 }
