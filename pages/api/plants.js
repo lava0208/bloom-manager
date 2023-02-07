@@ -23,13 +23,43 @@ export default async function handler(req, res) {
 
         //... update a plant
         case "PUT":
-            const { id } = req.query;
             await db.collection("plants").updateOne(
                 {
-                    _id: new ObjectId(id),
+                    _id: new ObjectId(req.query),
                 },
                 {
                     $set: {
+                        name: req.body.name,
+                        species: req.body.species,
+                        description: req.body.description,
+                        direct_sow_early: req.body.direct_sow_early,
+                        direct_sow_late: req.body.direct_sow_late,
+                        earliest_seed: req.body.earliest_seed,
+                        latest_seed: req.body.latest_seed,
+                        harden: req.body.harden,
+                        transplant: req.body.transplant,
+                        rebloom: req.body.rebloom,
+                        maturity_early: req.body.maturity_early,
+                        maturity_late: req.body.maturity_late,
+                        light: req.body.light,
+                        depth: req.body.depth,
+                        seed_note: req.body.seed_note,
+                        transplant_note: req.body.transplant_note,
+                        harvest_note: req.body.harvest_note,
+                        pinch_note: req.body.pinch_note,
+                        pinch: req.body.pinch,
+                        pot_on: req.body.pot_on,
+                        pot_on_note: req.body.pot_on_note,
+                        harvest_length: req.body.harvest_length,
+                        cold_stratify: req.body.cold_stratify,
+                        spacing_min: req.body.spacing_min,
+                        spacing_max: req.body.spacing_max,
+                        vase_life: req.body.vase_life,
+                        light_preference: req.body.light_preference,
+                        soil_requirements: req.body.soil_requirements,
+                        stem_length_range: req.body.stem_length_range,
+                        height: req.body.height,
+                        scented: req.body.scented
                     },
                 }
             );
