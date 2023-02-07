@@ -37,8 +37,8 @@ export default async function handler(req, res) {
                         quantity: req.body.quantity,
                         harvest: req.body.harvest,  //... early = 1, regular = 2, late = 3
                         plantings: req.body.plantings,
-                        days: req.body.days,
-                        option: req.body.option //... start = 1, regular = 2, pinch = 3, pot on = 4
+                        spacing: req.body.spacing,
+                        options: req.body.options //... start = 1, regular = 2, pinch = 3, pot on = 4
                     },
                 }
             );
