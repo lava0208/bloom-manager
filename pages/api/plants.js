@@ -29,6 +29,7 @@ export default async function handler(req, res) {
                 },
                 {
                     $set: {
+                        user_id: req.body.user_id,
                         name: req.body.name,
                         species: req.body.species,
                         description: req.body.description,
