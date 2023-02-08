@@ -32,13 +32,12 @@ export default async function handler(req, res) {
                 },
                 {
                     $set: {
-                        isActive: true,
-                        seeding: req.body.seeding,  //... direct sow = 1, start indoors = 2
-                        quantity: req.body.quantity,
-                        harvest: req.body.harvest,  //... early = 1, regular = 2, late = 3
-                        plantings: req.body.plantings,
-                        spacing: req.body.spacing,
-                        options: req.body.options //... start = 1, regular = 2, pinch = 3, pot on = 4
+                        season: req.body.season,
+                        name: req.body.name,
+                        last_frost: req.body.last_frost,
+                        first_frost: req.body.first_frost,
+                        size: req.body.size,
+                        location: req.body.location
                     },
                 }
             );
