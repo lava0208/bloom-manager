@@ -65,5 +65,10 @@ export default async function handler(req, res) {
                 }
             );
             return res.json({ status: true, message: 'plant is updated successfully.' });
+
+        //... delete a plant
+        case "DELETE":
+            await db.collection("plants").deleteOne({_id: new ObjectId(req.query)});
+            return res.json({ status: true, message: 'The plant is deleted successfully.' });
     }
 }

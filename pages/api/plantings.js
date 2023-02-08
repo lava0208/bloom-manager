@@ -22,7 +22,7 @@ export default async function handler(req, res) {
                 return res.json({ status: true, data: plan });
             }
 
-        //... update a plan
+        //... update a planting
         case "PUT":
             const { id } = req.query;
             await db.collection("plantings").updateOne(
@@ -40,5 +40,10 @@ export default async function handler(req, res) {
                 }
             );
             return res.json({ status: true, message: 'Planting is updated successfully.' });
+
+        //... delete a planting
+        case "DELETE":
+            await db.collection("plantings").deleteOne({_id: new ObjectId(req.query)});
+            return res.json({ status: true, message: 'The planting is deleted successfully.' });
     }
 }

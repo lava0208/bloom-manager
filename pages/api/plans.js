@@ -42,5 +42,10 @@ export default async function handler(req, res) {
                 }
             );
             return res.json({ status: true, message: 'Plan is updated successfully.' });
+
+        //... delete a plan
+        case "DELETE":
+            await db.collection("plans").deleteOne({_id: new ObjectId(req.query)});
+            return res.json({ status: true, message: 'The plan is deleted successfully.' });
     }
 }
