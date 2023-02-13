@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 
-import styles from "~styles/pages/register/success.module.scss";
+import styles from "~styles/pages/account/success.module.scss";
 
 const Success = () => {
   const [name, setName] = useState("Sally");

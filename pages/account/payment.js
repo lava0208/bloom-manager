@@ -2,18 +2,18 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 
-import styles from "~styles/pages/register/account.module.scss";
-import styles1 from "~styles/pages/register/payment.module.scss";
+import styles from "~styles/pages/account/register.module.scss";
+import styles1 from "~styles/pages/account/payment.module.scss";
 
 const Payment = () => {
     const router = useRouter();
 
     const goFree = () => {
-        router.push("/register/success")
+        router.push("/account/success")
     }
 
     const goPro = () => {
-        router.push("/register/success")
+        router.push("/account/success")
     }
 
     return (

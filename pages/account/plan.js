@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 
-import styles from "~styles/pages/register/account.module.scss";
+import styles from "~styles/pages/account/register.module.scss";
 
 const Plan = () => {
   const [name, setName] = useState("");
@@ -16,7 +16,7 @@ const Plan = () => {
   
   const register = () => {
     if(name !== "" && location !== "" && size !== ""){
-      router.push("/register/payment")
+      router.push("/account/payment")
     }else{
       setError(true);
     }

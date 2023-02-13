@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 
-import styles from "~styles/pages/register/farm.module.scss";
+import styles from "~styles/pages/account/farm.module.scss";
 
 const Farm = () => {
   const [name, setName] = useState("");
@@ -64,7 +64,7 @@ const Farm = () => {
 
       <div
         className={styles.nextButtonContainer}
-        onClick={() => router.push("/register/account")}
+        onClick={() => router.push("/account/login")}
       >
         <h5>Next</h5>
       </div>

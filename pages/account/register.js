@@ -2,9 +2,10 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 
-import styles from "~styles/pages/register/account.module.scss";
+import styles from "~styles/pages/account/register.module.scss";
 
-const Login = () => {
+const Register = () => {
+    const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(false);
@@ -21,10 +22,10 @@ const Login = () => {
         return true;
     }
 
-    const login = () => {
-        if (email !== "" && password !== "") {
+    const register = () => {
+        if (name !== "" && email !== "" && password !== "") {
             if (emailValidation()) {
-                router.push("/")
+                router.push("/account/plan")
             }
         } else {
             setError(true);
@@ -36,10 +37,17 @@ const Login = () => {
         <div className={styles.screen}>
             <img className={styles.logo} src={"/assets/logo.png"} alt="logo" />
             <div className={styles.formContainer}>
-                <h2>Login with your account.</h2>
+                <h2>Setup your account.</h2>
 
                 <div className={styles.formDetailsContainer}>
                     <div className={styles.detailsInputsContainer}>
+                        <input
+                            type="text"
+                            className={styles.input}
+                            placeholder="Your Name"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                        />
                         <input
                             type="text"
                             className={styles.input}
@@ -48,6 +56,7 @@ const Login = () => {
                             onChange={(e) => setEmail(e.target.value)}
                         />
                     </div>
+                    <div className={styles.detailsProfilePictureContainer}></div>
                 </div>
 
                 <input
@@ -66,7 +75,7 @@ const Login = () => {
 
             <div
                 className={styles.nextButtonContainer}
-                onClick={() => login()}
+                onClick={() => register()}
             >
                 <h5>Next</h5>
             </div>
@@ -74,4 +83,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default Register;
