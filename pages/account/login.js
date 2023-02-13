@@ -21,10 +21,26 @@ const Login = () => {
         return true;
     }
 
-    const login = () => {
+    const login = async () => {
         if (email !== "" && password !== "") {
             if (emailValidation()) {
-                router.push("/")
+                const response = await fetch("/api/auth/user", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        password: password
+                    }),
+                })
+                const user = await response.json();
+                if(user.status === true){
+                    router.push("/")
+                }else{
+                    setError(true);
+                    setErrorText(user.message)
+                }
             }
         } else {
             setError(true);
@@ -62,6 +78,7 @@ const Login = () => {
                         <p className={styles.errorText}>{errorText}</p>
                     )
                 }
+                <h4><a onClick={() => router.push('/account/register')}>Click here </a> to register a new account.</h4>
             </div>
 
             <div
