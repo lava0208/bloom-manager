@@ -1,29 +1,44 @@
-import React, { useState } from "react";
-import constants from "../../helpers/constants"
+import React, { useState, useEffect } from "react";
 
 import styles from "~styles/components/plantsettings/userSettings.module.scss";
 
 const UserSettings = (props) => {
     const [userSettings, setUserSettings] = useState({
-        lastFrost: "",
-        firstFrost: "",
+        name: "",
+        last_frost: "",
+        first_frost: "",
         location: ""
     });
+
+    useEffect(() => {
+        getUserPlan();
+    }, [])
+
+    const getUserPlan = async () => {
+        const response = await fetch("/api/plans?userid=" + window.userid, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+        const result = await response.json();
+        setUserSettings(result.data);
+    }
 
     return (
         <div className={styles.userSettingsContainer}>
             <div className={styles.userSettingsPaper}>
                 <div className={styles.userSettingsOptionsContainer}>
-                    <h2>2023 Plan Settings</h2>
+                    <h2>{userSettings.name}</h2>
                     <div className={styles.userSettingsInputRow}>
                         <input
                             type="text"
                             placeholder="Last Frost"
-                            value={userSettings.lastFrost}
+                            value={userSettings.last_frost}
                             onChange={(e) => {
                                 setUserSettings({
                                     ...userSettings,
-                                    lastFrost: e.target.value,
+                                    last_frost: e.target.value,
                                 });
                             }}
                         />
@@ -32,11 +47,11 @@ const UserSettings = (props) => {
                         <input
                             type="text"
                             placeholder="First Frost"
-                            value={userSettings.firstFrost}
+                            value={userSettings.first_frost}
                             onChange={(e) => {
                                 setUserSettings({
                                     ...userSettings,
-                                    firstFrost: e.target.value,
+                                    first_frost: e.target.value,
                                 });
                             }}
                         />
@@ -45,17 +60,14 @@ const UserSettings = (props) => {
                         <input
                             type="text"
                             placeholder="Location"
-                            value={userSettings.location}
-                            onChange={(e) => {
-                                setUserSettings({
-                                    ...userSettings,
-                                    location: e.target.value,
-                                });
-                            }}
+                            value="Location"
+                            readOnly
                         />
                     </div>
                     <div className={styles.userSettingsInputRow}>
-                        <div className={styles.map}></div>
+                        <div className={styles.map}>
+                            {userSettings.location.country + " " + userSettings.location.city}
+                        </div>
                     </div>
                 </div>
                 <button className={styles.settingsButton} onClick = {props.saveSetting}>Save Changes</button>

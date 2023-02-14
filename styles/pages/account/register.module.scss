@@ -31,9 +31,10 @@
     h4{
         margin-top: 1.5rem;
         font-weight: 700;
+        font-size: 1rem;
         a{
             font-weight: 700;
-            color: $green;
+            color: $green!important;
             cursor: pointer;
         }
     }
@@ -117,4 +118,5 @@
     color: $red;
     font-weight: bold;
     margin-bottom: 0;
+    margin-top: 1rem;
 }

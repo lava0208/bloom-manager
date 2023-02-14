@@ -10,25 +10,25 @@ export default async function handler(req, res) {
         case "POST":
             await db.collection("plans").insertOne(req.body);
             return res.json({ status: true, data: 'A plan is created successfully.' });
-
-        //... get all plans or plan by id
+        //... get all plans or plan by user id
         case "GET":
-            const { planid } = req.query;
-            console.log(planid);
-            if(planid === undefined){
+            const id = req.query.id;
+            const userid = req.query.userid;
+            if(id === undefined && userid === undefined){
                 let plans = await db.collection("plans").find({}).toArray();
                 return res.json({ status: true, data: plans });
+            }else if(id === undefined){
+                let plan = await db.collection("plans").findOne({userid: userid});
+                return res.json({ status: true, data: plan });
             }else{
-                let plan = await db.collection("plans").findOne({_id: new ObjectId(planid)});
+                let plan = await db.collection("plans").findOne({id: id});
                 return res.json({ status: true, data: plan });
             }
-
         //... update a plan
         case "PUT":
-            const { id } = req.query;
             await db.collection("plans").updateOne(
                 {
-                    _id: new ObjectId(id),
+                    userid: req.query.id,
                 },
                 {
                     $set: {

@@ -1,13 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useState } from "react";
 import { useRouter } from "next/router";
-import constants from "../../helpers/constants";
 
 import styles from "~styles/pages/account/register.module.scss";
 
 const Plan = () => {
     const [plan, setPlan] = useState({
-        userid: constants.userid,
+        userid: window.userid,
         name: "",
         location: "",
         size: "",
