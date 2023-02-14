@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useState } from "react";
 import { useRouter } from "next/router";
-import constants from "../../helpers/constants";
 
 import styles from "~styles/pages/account/register.module.scss";
 
@@ -37,7 +36,7 @@ const Login = () => {
                 })
                 const user = await response.json();
                 if(user.status === true){
-                    constants.userid = user.data[0]._id;
+                    window.userid = user.data[0]._id;
                     router.push("/")
                 }else{
                     setError(true);

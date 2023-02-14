@@ -12,8 +12,8 @@ export default async function handler(req, res) {
                 return res.json({ status: false, message: 'Another account already exists for this email address!' });    
             }else{
                 req.body.password = bcrypt.hashSync(req.body.password, 10);
-                await db.collection("users").insertOne(req.body);
-                return res.json({ status: true, data: 'The user is registered successfully.' });
+                const newUser = await db.collection("users").insertOne(req.body);
+                return res.json({ status: true, data: newUser, message: 'The user is registered successfully.' });
             }
     }
 }

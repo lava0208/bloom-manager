@@ -37,6 +37,7 @@ const Register = () => {
                 })
                 const result = await response.json();
                 if(result.status === true){
+                    window.userid = result.data.insertedId;
                     router.push("/account/plan")
                 }else{
                     setError(true);
