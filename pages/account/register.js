@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useState } from "react";
 import { useRouter } from "next/router";
-import { userService } from '../../services';
 
 import styles from "~styles/pages/account/register.module.scss";
 
