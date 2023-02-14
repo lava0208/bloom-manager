@@ -23,7 +23,8 @@ export default async function handler(req, res) {
             } else {
                 return res.json({ status: false, message: 'Email and/or password are not correct!' });
             }
-
+            break;
+        
         //... get profile info
         case "GET":
             let profile = await db.collection("users").findOne({_id: new ObjectId(req.query)});

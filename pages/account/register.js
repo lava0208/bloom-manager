@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useState } from "react";
 import { useRouter } from "next/router";
+import { userService } from '../../services';
 
 import styles from "~styles/pages/account/register.module.scss";
 
@@ -22,10 +23,26 @@ const Register = () => {
         return true;
     }
 
-    const register = () => {
+    const register = async () => {
         if (name !== "" && email !== "" && password !== "") {
             if (emailValidation()) {
-                router.push("/account/plan")
+                const response = await fetch("/api/auth/register", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        password: password
+                    }),
+                })
+                const user = await response.json();
+                if(user.status === true){
+                    router.push("/account/plan")
+                }else{
+                    setError(true);
+                    setErrorText(user.message)
+                }
             }
         } else {
             setError(true);
@@ -71,6 +88,7 @@ const Register = () => {
                         <p className={styles.errorText}>{errorText}</p>
                     )
                 }
+                <h4><a onClick={() => router.push('/account/login')}>Click here </a> to login.</h4>
             </div>
 
             <div
