@@ -5,16 +5,19 @@ import { useRouter } from "next/router";
 import styles from "~styles/pages/account/register.module.scss";
 
 const Register = () => {
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [user, setUser] = useState({
+        name: "",
+        email: "",
+        password: ""
+    });
+
     const [error, setError] = useState(false);
     const [errorText, setErrorText] = useState("");
 
     const router = useRouter();
     const emailValidation = () => {
         const regex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-        if (regex.test(email) === false) {
+        if (regex.test(user.email) === false) {
             setError(true);
             setErrorText("Email is not valid");
             return false;
@@ -23,24 +26,21 @@ const Register = () => {
     }
 
     const register = async () => {
-        if (name !== "" && email !== "" && password !== "") {
+        if (user.name !== "" && user.email !== "" && user.password !== "") {
             if (emailValidation()) {
                 const response = await fetch("/api/auth/register", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
                     },
-                    body: JSON.stringify({
-                        email: email,
-                        password: password
-                    }),
+                    body: JSON.stringify(user),
                 })
-                const user = await response.json();
-                if(user.status === true){
+                const result = await response.json();
+                if(result.status === true){
                     router.push("/account/plan")
                 }else{
                     setError(true);
-                    setErrorText(user.message)
+                    setErrorText(result.message)
                 }
             }
         } else {
@@ -61,15 +61,25 @@ const Register = () => {
                             type="text"
                             className={styles.input}
                             placeholder="Your Name"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
+                            value={user.name}
+                            onChange={(e) => {
+                                setUser({
+                                    ...user,
+                                    name: e.target.value,
+                                });
+                            }}
                         />
                         <input
                             type="text"
                             className={styles.input}
                             placeholder="Email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            value={user.email}
+                            onChange={(e) => {
+                                setUser({
+                                    ...user,
+                                    email: e.target.value,
+                                });
+                            }}
                         />
                     </div>
                     <div className={styles.detailsProfilePictureContainer}></div>
@@ -79,8 +89,13 @@ const Register = () => {
                     type="password"
                     className={styles.input}
                     placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    value={user.password}
+                    onChange={(e) => {
+                        setUser({
+                            ...user,
+                            password: e.target.value,
+                        });
+                    }}
                 />
                 {
                     error && (

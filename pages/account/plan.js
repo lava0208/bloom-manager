@@ -1,16 +1,18 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useState } from "react";
 import { useRouter } from "next/router";
+import constants from "../../helpers/constants";
 
 import styles from "~styles/pages/account/register.module.scss";
 
 const Plan = () => {
     const [plan, setPlan] = useState({
+        userid: constants.userid,
         name: "",
         location: "",
         size: "",
-        lastDate: "",
-        firstDate: ""
+        last_frost: "",
+        first_frost: ""
     });
     const [error, setError] = useState(false);
 
@@ -89,11 +91,11 @@ const Plan = () => {
                     type="text"
                     className={styles.input}
                     placeholder="Last Frost date"
-                    value={plan.lastDate}
+                    value={plan.last_frost}
                     onChange={(e) => {
                         setPlan({
                             ...plan,
-                            lastDate: e.target.value,
+                            last_frost: e.target.value,
                         });
                     }}
                 />
@@ -102,11 +104,11 @@ const Plan = () => {
                     type="text"
                     className={styles.input}
                     placeholder="First Frost date"
-                    value={plan.firstDate}
+                    value={plan.first_frost}
                     onChange={(e) => {
                         setPlan({
                             ...plan,
-                            firstDate: e.target.value,
+                            first_frost: e.target.value,
                         });
                     }}
                 />
