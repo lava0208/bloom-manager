@@ -22,14 +22,26 @@ const UserSettings = (props) => {
             }
         })
         const result = await response.json();
-        setUserSettings(result.data);
+        if(result.data !== null){
+            setUserSettings(result.data);
+        }
+    }
+
+    const saveSetting = async () => {
+        await fetch("/api/plans?userid=" + window.userid, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(userSettings),
+        })
     }
 
     return (
         <div className={styles.userSettingsContainer}>
             <div className={styles.userSettingsPaper}>
                 <div className={styles.userSettingsOptionsContainer}>
-                    <h2>{userSettings.name}</h2>
+                    <h2>{userSettings && userSettings.name ? userSettings.name : "2023 Plan Settings"}</h2>
                     <div className={styles.userSettingsInputRow}>
                         <input
                             type="text"
@@ -66,11 +78,11 @@ const UserSettings = (props) => {
                     </div>
                     <div className={styles.userSettingsInputRow}>
                         <div className={styles.map}>
-                            {userSettings.location.country + " " + userSettings.location.city}
+                            {userSettings.location ? userSettings.location.country + " " + userSettings.location.city : ""}
                         </div>
                     </div>
                 </div>
-                <button className={styles.settingsButton} onClick = {props.saveSetting}>Save Changes</button>
+                <button className={styles.settingsButton} onClick = {() => { saveSetting(), props.closePlanSettingsModal() }}>Save Changes</button>
                 <button className={styles.settingsButton} onClick = {props.cancelSetting}>Cancel</button>
             </div>
         </div>

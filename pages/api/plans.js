@@ -26,21 +26,38 @@ export default async function handler(req, res) {
             }
         //... update a plan
         case "PUT":
-            await db.collection("plans").updateOne(
-                {
-                    userid: req.query.id,
-                },
-                {
-                    $set: {
-                        season: req.body.season,
-                        name: req.body.name,
-                        last_frost: req.body.last_frost,
-                        first_frost: req.body.first_frost,
-                        size: req.body.size,
-                        location: req.body.location
+            if(req.query.id){
+                await db.collection("plans").updateOne(
+                    {
+                        id: req.query.id,
                     },
-                }
-            );
+                    {
+                        $set: {
+                            name: req.body.name,
+                            last_frost: req.body.last_frost,
+                            first_frost: req.body.first_frost,
+                            size: req.body.size,
+                            location: req.body.location
+                        },
+                    }
+                );
+            }else{
+                await db.collection("plans").updateOne(
+                    {
+                        userid: req.query.userid,
+                    },
+                    {
+                        $set: {
+                            name: req.body.name,
+                            last_frost: req.body.last_frost,
+                            first_frost: req.body.first_frost,
+                            size: req.body.size,
+                            location: req.body.location
+                        },
+                    }
+                );
+            }
+            
             return res.json({ status: true, message: 'Plan is updated successfully.' });
 
         //... delete a plan
