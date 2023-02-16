@@ -1,10 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import { userService } from "services";
 import bcrypt from "bcryptjs";
 
 import styles from "~styles/pages/profile.module.scss";
-import { userService } from "services";
 
 const Profile = () => {
     const router = useRouter();
@@ -21,12 +21,11 @@ const Profile = () => {
     const [errMsg, setErrMsg] = useState("");
 
     useEffect(() => {
-        getUserPlan();
+        getUser();
     }, [])
 
-    const getUserPlan = async () => {
+    const getUser = async () => {
         const user = await userService.getById(userService.getId());
-        console.log(user);
         if(user.data !== null){
             setOriginPassword(user.data.password);
             setUser(user.data);
@@ -34,25 +33,27 @@ const Profile = () => {
     }
     
     const saveUser = () => {
-        bcrypt.compare(user.password, "$2a$10$fwhzEh5KNdIx9mhz99B7eug/wh8iFye8wXKbygh7rOrYDq633UlUS", async function (err, isMatch) {
-            // console.log(user.password);
-            // console.log(originPassword);
+        bcrypt.compare(user.password, originPassword, async function (err, isMatch) {
             if (err, user.password === "") {
                 setErrMsg("Fill all fields");
             } else if (!isMatch) {
                 setErrMsg("Use correct password.");
             } else {
-                alert("here")
                 setErrMsg(" ");
-                await fetch("/api/auth/user?id=" + window.userid, {
-                    method: "PUT",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(user),
-                })
+                const result = await userService.update(userService.getId(), user);
+                if(result.status === true){
+                }else{
+                    setErrorText(result.message)
+                }
             }
         });
+    }
+
+    const deleteUser = async () => {
+        await userService.delete(userService.getId());
+        localStorage.removeItem("user");
+        localStorage.removeItem("userid");
+        router.push("/account/register");
     }
 
     return (<>
@@ -100,10 +101,9 @@ const Profile = () => {
                             <input
                                 type="checkbox"
                                 id="emailNewsletter"
-                                value={user.email_newsletter}
                                 checked={user.email_newsletter}
                                 onChange={(e) =>
-                                    saveUser({ ...user, email_newsletter: e.target.value })
+                                    setUser({ ...user, email_newsletter: e.target.checked })
                                 }
                             />
                             <label htmlFor="emailNewsletter">Email Newsletter</label>                        
@@ -112,18 +112,17 @@ const Profile = () => {
                             <input
                                 type="checkbox"
                                 id="shareCustomVarieties"
-                                value={user.share_custom_varieties}
                                 checked={user.share_custom_varieties}
                                 onChange={(e) =>
-                                    saveUser({ ...user, share_custom_varieties: e.target.value })
+                                    setUser({ ...user, share_custom_varieties: e.target.checked })
                                 }
                             />
                             <label htmlFor="shareCustomVarieties">Share Custom Varieties</label>                        
                         </div>
-                        <button className={styles.button1}>Save Changes</button>
+                        <button className={styles.button1} onClick={() => saveUser()}>Save Changes</button>
                     </div>
                 </div>
-                <button className={styles.button2} onClick={() => router.push("/account/login")}>Close Account</button>
+                <button className={styles.button2} onClick={() => deleteUser()}>Close Account</button>
             </div>
             <div className={styles.profileContainer}>
                 {
