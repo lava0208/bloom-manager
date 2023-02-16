@@ -1,22 +1,62 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import bcrypt from "bcryptjs";
 
 import styles from "~styles/pages/profile.module.scss";
+import { userService } from "services";
 
 const Profile = () => {
     const router = useRouter();
     const [user, setUser] = useState({
         name: "",
         email: "",
-        password: ""
+        password: "",
+        email_newsletter: false,
+        share_custom_varieties: false
     });
-    const [preference, setPreference] = useState({
-        emailNewsletter: false,
-        shareCustomVarieties: false
-    })
     const [isPro, setIsPro] = useState(false);
-    return (
+
+    const [originPassword, setOriginPassword] = useState("");
+    const [errMsg, setErrMsg] = useState("");
+
+    useEffect(() => {
+        getUserPlan();
+    }, [])
+
+    const getUserPlan = async () => {
+        const user = await userService.getById(userService.getId());
+        console.log(user);
+        if(user.data !== null){
+            setOriginPassword(user.data.password);
+            setUser(user.data);
+        }
+    }
+    
+    const saveUser = () => {
+        bcrypt.compare(user.password, "$2a$10$fwhzEh5KNdIx9mhz99B7eug/wh8iFye8wXKbygh7rOrYDq633UlUS", async function (err, isMatch) {
+            // console.log(user.password);
+            // console.log(originPassword);
+            if (err, user.password === "") {
+                setErrMsg("Fill all fields");
+            } else if (!isMatch) {
+                setErrMsg("Use correct password.");
+            } else {
+                alert("here")
+                setErrMsg(" ");
+                await fetch("/api/auth/user?id=" + window.userid, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(user),
+                })
+            }
+        });
+    }
+
+    return (<>
+        <h2 className={styles.subHeader}>Hello, {user.name}</h2>
         <div className={styles.profilesContainer}>
             <div className={styles.profileContainer}>
                 <div className={styles.profileImage}></div>
@@ -39,14 +79,19 @@ const Profile = () => {
                         }
                     />
                     <input
-                        type="text"
+                        type="password"
                         placeholder="Password"
                         value={user.password}
                         onChange={(e) =>
                             setUser({ ...user, password: e.target.value })
                         }
                     />
-                    <button className={styles.button1}>Save Changes</button>
+                    { 
+                        errMsg && (
+                            <p className={styles.errorText}>{errMsg}</p>
+                        )
+                    }
+                    <button className={styles.button1} onClick={() => saveUser()}>Save Changes</button>
                 </div>
                 <div className={styles.preferenceContainer}>
                     <h3>Preferences</h3>
@@ -55,9 +100,10 @@ const Profile = () => {
                             <input
                                 type="checkbox"
                                 id="emailNewsletter"
-                                value={preference.emailNewsletter}
+                                value={user.email_newsletter}
+                                checked={user.email_newsletter}
                                 onChange={(e) =>
-                                    setPreference({ ...preference, emailNewsletter: e.target.value })
+                                    saveUser({ ...user, email_newsletter: e.target.value })
                                 }
                             />
                             <label htmlFor="emailNewsletter">Email Newsletter</label>                        
@@ -66,9 +112,10 @@ const Profile = () => {
                             <input
                                 type="checkbox"
                                 id="shareCustomVarieties"
-                                value={preference.shareCustomVarieties}
+                                value={user.share_custom_varieties}
+                                checked={user.share_custom_varieties}
                                 onChange={(e) =>
-                                    setPreference({ ...preference, shareCustomVarieties: e.target.value })
+                                    saveUser({ ...user, share_custom_varieties: e.target.value })
                                 }
                             />
                             <label htmlFor="shareCustomVarieties">Share Custom Varieties</label>                        
@@ -108,6 +155,7 @@ const Profile = () => {
                 <button className={styles.button2} onClick={() => setIsPro(false)}>Cancel PRO</button>
             </div>
         </div>
+        </>
     );
 };
 
