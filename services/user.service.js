@@ -1,8 +1,6 @@
 import { apiUrl } from 'config';
-import { fetchWrapper } from '../helpers';
 
 export const userService = {
-    getAll,
     getById,
     login,
     register,
@@ -16,10 +14,6 @@ export const userService = {
 };
 
 const baseUrl = `${apiUrl}/auth`;
-
-function getAll() {
-    return fetchWrapper.get(baseUrl);
-}
 
 async function getById(id) {
     const response = await fetch(`${baseUrl}/user?id=` + id, {
