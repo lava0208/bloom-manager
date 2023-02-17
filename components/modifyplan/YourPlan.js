@@ -24,10 +24,14 @@ const YourPlan = () => {
         setPlanting(_result.data);
     }
     const savePlanting = () => {
+        getAllPlantings();
         setPlanEditModalOpen(false);
     }
-    const resetPlan = () => {
-        setPlanEditModalOpen(false);
+    const deletePlanting = async (id) => {
+        if (confirm('Are you sure you want to delete this plan?')) {
+            await plantingService.delete(id);
+            getAllPlantings();
+        }
     }
 
     useEffect(() => {
@@ -72,7 +76,7 @@ const YourPlan = () => {
                             {
                                 i === isShowActionText && (
                                     <div className={styles.plantHoverText}>
-                                        <button>Delete</button>
+                                        <button onClick={() => deletePlanting(planting._id)}>Delete</button>
                                         <button onClick={() => openPlanEditModal(planting._id, planting.plant_id)}>Edit</button>
                                     </div>
                                 )
