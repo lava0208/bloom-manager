@@ -59,6 +59,19 @@ const CurrentPlan = (props) => {
         props.savePlanting();
     }
 
+    const reset = () => {
+        setPlanting(planting => ({
+            ...planting,
+            seeds: null,
+            succession: "",
+            spacing: ""
+        }))
+        setActiveSeed(-1);
+        setActiveHarvest(-1);
+        setPinchCheckbox(false);
+        setPotCheckbox(false);
+    }
+
     return (
         <div className={styles.container}>
             <div className="modal-header">
@@ -110,11 +123,11 @@ const CurrentPlan = (props) => {
                             </div>
                             <div className={styles.successionButtonsContainer}>
                                 <div>
-                                    <input placeholder="6" value={planting.succession} onChange={(e) => setPlanting({...planting, succession: e.target.value})} /> 
+                                    <input value={planting.succession} onChange={(e) => setPlanting({...planting, succession: e.target.value})} /> 
                                     <span>Plantings</span>
                                 </div>
                                 <div>
-                                    <input placeholder="14" value={planting.spacing} onChange={(e) => setPlanting({...planting, spacing: e.target.value})} />
+                                    <input value={planting.spacing} onChange={(e) => setPlanting({...planting, spacing: e.target.value})} />
                                     <span>Days Between</span>
                                 </div>
                             </div>
@@ -140,7 +153,7 @@ const CurrentPlan = (props) => {
             </div>
             <div className={styles.buttonsContainer}>
                 <button onClick={() => save()}>Save Changes</button>
-                <button onClick={props.resetPlan}>Reset</button>
+                <button onClick={() => reset()}>Reset</button>
             </div>
         </div>
     );
