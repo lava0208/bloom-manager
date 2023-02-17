@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+/* eslint-disable react-hooks/rules-of-hooks */
+import React, { useState, useEffect } from "react";
 import { Modal, ModalHeader, ModalBody } from "reactstrap";
-
-import { settingsPlants } from "~lib/dummy";
 
 import { userService, plantService } from "services";
 
@@ -36,6 +35,32 @@ const Plants = () => {
         harvest_note: "",
     });
 
+    const [origialArray, setOrigialArray] = useState([]);
+    const [query, setQuery] = useState('');
+    const [filteredArray, setFilteredArray] = useState([]);
+
+    useEffect(() => {
+        getOriginalArray();
+    }, [])
+
+    const getOriginalArray = async () => {
+        const response = await plantService.getAll();
+        setOrigialArray(response.data)
+        setFilteredArray(response.data)
+    }
+
+    useEffect(() => {
+        refreshFilterdArray();
+    }, [query])
+
+    const refreshFilterdArray = async () => {
+        var _filteredArray =  origialArray.filter(
+              (el) => el.name.toLowerCase().includes(query)
+        )      
+
+        setFilteredArray(_filteredArray)
+    }
+
     const [modalOpen, setModalOpen] = useState(false);
     const [isShowActionText, setIsShowActionText] = useState(-1);
     const openCreateModal = () => {
@@ -44,19 +69,6 @@ const Plants = () => {
 
     const [error, setError] = useState(false);
     const [errorText, setErrorText] = useState("");
-
-    const [query, setQuery] = useState('');
-    const search = (e) => {
-        setQuery(e.target.value)
-    }
-    const searchFilter = (array) => {
-        return array.filter(
-            (el) => Object.keys(el).some((parameter) => 
-                el[parameter].toString().toLowerCase().includes(query)
-            )
-        )
-    }
-    const filtered = searchFilter(settingsPlants)
 
     const savePlant = async () => {
         if (plant.name !== "" && plant.species !== "" && plant.description !== "") {
@@ -78,10 +90,10 @@ const Plants = () => {
                 <div className={styles.addCustomContainer} onClick={() => openCreateModal()}>
                     <button>Add New Custom</button>
                 </div>
-                <input className={styles.searchButton} placeholder={'Search'} onChange={search} />
+                <input className={styles.searchButton} placeholder={'Search'} onChange={(e) => setQuery(e.target.value)} />
             </div>
             <div className={styles.plantsContainer}>
-                {filtered.map((plant, i) => (
+                {filteredArray.map((plant, i) => (
                     <div className={styles.plantContainer} key={i} onMouseEnter={() => setIsShowActionText(i)} onMouseLeave={() => setIsShowActionText(-1)}>
                         <div className={styles.plantImage}></div>
                         <div className={styles.plantInfoContainer}>
@@ -251,6 +263,7 @@ const Plants = () => {
                                 <input
                                     type="checkbox"
                                     id="rebloom"
+                                    value={plant.reBloom}
                                     checked={plant.reBloom}
                                     onChange={(e) => {
                                         setPlant({
@@ -337,6 +350,7 @@ const Plants = () => {
                             <h6 className="d-flex align-items-center">
                                 <label htmlFor="light">Light for germination</label>
                                 <input type="checkbox" id="light"
+                                    value={plant.light}
                                     checked={plant.light}
                                     onChange={(e) => {
                                         setPlant({
