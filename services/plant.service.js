@@ -4,7 +4,8 @@ export const plantService = {
     getAll,
     create,
     getById,
-    update
+    update,
+    delete: _delete
 };
 
 const baseUrl = `${apiUrl}/plants`;
@@ -47,6 +48,16 @@ async function update(id, params) {
             "Content-Type": "application/json"
         },
         body: JSON.stringify(params)
+    })
+    return response.json();
+}
+
+async function _delete(id) {
+    const response = await fetch(`${baseUrl}?id=` + id, {
+        method: "Delete",
+        headers: {
+            "Content-Type": "application/json"
+        }
     })
     return response.json();
 }

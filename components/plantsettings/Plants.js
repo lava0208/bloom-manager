@@ -52,10 +52,15 @@ const Plants = () => {
     }
     const savePlant = () => {
         setModalOpen(false);
-        getOriginalArray()
+        getOriginalArray();
     }
     const cancelPlant = () => {
         setModalOpen(false);
+    }
+
+    const deletePlant = async (id) => {
+        await plantService.delete(id);
+        getOriginalArray();
     }
 
     return (
@@ -79,7 +84,7 @@ const Plants = () => {
                             i === isShowActionText && (
                                 <div className={styles.plantHoverText}>
                                     <button onClick={() => openModal("edit", plant._id)}>Edit</button>
-                                    <button>Remove</button>
+                                    <button onClick={() => deletePlant(plant._id)}>Remove</button>
                                 </div>
                             )
                         }
