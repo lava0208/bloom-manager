@@ -19,21 +19,19 @@ export default async function handler(req, res) {
 
         //... get all plantings or planing by id
         case "GET":
-            const { plantingid } = req.query;
-            if(plantingid === undefined){
+            if(req.query.id === undefined){
                 let plantings = await db.collection("plantings").find({}).toArray();
                 return res.json({ status: true, data: plantings });
             }else{
-                let plan = await db.collection("plantings").findOne({_id: new ObjectId(plantingid)});
+                let plan = await db.collection("plantings").findOne({_id: new ObjectId(req.query.id)});
                 return res.json({ status: true, data: plan });
             }
 
         //... update a planting
         case "PUT":
-            const { id } = req.query;
             await db.collection("plantings").updateOne(
                 {
-                    _id: new ObjectId(id),
+                    _id: new ObjectId(req.query.id),
                 },
                 {
                     $set: {
@@ -49,7 +47,7 @@ export default async function handler(req, res) {
 
         //... delete a planting
         case "DELETE":
-            await db.collection("plantings").deleteOne({_id: new ObjectId(req.query)});
+            await db.collection("plantings").deleteOne({_id: new ObjectId(req.query.id)});
             return res.json({ status: true, message: 'The planting is deleted successfully.' });
     }
 }

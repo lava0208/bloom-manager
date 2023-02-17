@@ -45,9 +45,6 @@ const AvailablePlans = () => {
     const savePlanting = () => {
         setModalOpen(false);
     }
-    const resetPlan = () => {
-        setModalOpen(false);
-    }
 
     return (
         <>

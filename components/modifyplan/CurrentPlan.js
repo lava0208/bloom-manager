@@ -4,10 +4,25 @@ import { userService, planService, plantService, plantingService } from "service
 import styles from "~styles/components/modifyplan/currentplan.module.scss";
 
 const CurrentPlan = (props) => {
+    //... Initialize
+    const [pinchCheckbox, setPinchCheckbox] = useState(false);
+    const [potCheckbox, setPotCheckbox] = useState(false);
+    const seeds = [
+        { label: "Direct Sow", value: 1 },
+        { label: "Direct Indoors", value: 2 }
+    ]
+    const [activeSeed, setActiveSeed] = useState(-1);
+    const harvests = [
+        { label: "Early", value: 1 },
+        { label: "Regular", value: 2 },
+        { label: "Late", value: 3 }
+    ]
+    const [activeHarvest, setActiveHarvest] = useState(-1);
+
     const [planting, setPlanting] = useState({
         plan_id: "",
         plant_id: props.plantId,
-        seeds: null,
+        seeds: "",
         harvest: "",
         direct_sow: false,
         pinch: false,
@@ -15,43 +30,42 @@ const CurrentPlan = (props) => {
         succession: "",
         spacing: ""
     })
-    
-    useEffect(() => {
-        getPlan();
-        getPlantById();
-    }, [])
 
-    //... get plan id
-    const getPlan = async () => {
-        var _plan = await planService.getByUserId(userService.getId());
-        setPlanting(planting => ({
-            ...planting,
-            plan_id: _plan.data._id
-        }))
-    }
+    useEffect(() => {        
+        if(props.planting){
+            //... edit page
+            getPlanting();
+            setPinchCheckbox(props.planting.pinch);
+            setPotCheckbox(props.planting.pot_on);
+            setActiveSeed(props.planting.direct_sow ? 1 : 2);
+            var _harvest = harvests.find(x => x.label === props.planting.harvest)
+            setActiveHarvest(_harvest ? _harvest.value : -1);
+        }else{
+            //... create page
+            getPlantAndPlanting();
+        }
+    }, [props.planting])
 
-    //... get plant name, species, description
+    //... get plan nand planting
     const [plant, setPlant] = useState({});
-    const getPlantById = async () => {
-        var _result = await plantService.getById(props.plantId);
-        setPlant(_result.data)
+    const getPlantAndPlanting = async () => {
+        var _plan = await planService.getByUserId(userService.getId());
+        var _plant = await plantService.getById(props.plantId);
+        
+        var _planting = { ...planting };
+        _planting.plan_id = _plan.data._id;
+        _planting.name = _plant.data.name;
+        setPlant(_plant.data);
+        setPlanting(_planting);
     }
 
-    const [pinchCheckbox, setPinchCheckbox] = useState(false);
-    const [potCheckbox, setPotCheckbox] = useState(false);
+    const getPlanting = async () => {
+        var _plant = await plantService.getById(props.plantId);
+        setPlant(_plant.data);
+        setPlanting(props.planting)
+    }
 
-    const seeds = [
-        { label: "Direct Sow", value: 1 },
-        { label: "Direct Indoors", value: 2 }
-    ]
-    const [activeSeed, setActiveSeed] = useState(-1);
-
-    const harvests = [
-        { label: "Early", value: 1 },
-        { label: "Regular", value: 2 },
-        { label: "Late", value: 3 }
-    ]
-    const [activeHarvest, setActiveHarvest] = useState(-1);
+    
 
     const save = async () => {
         const result = await plantingService.create(planting);
