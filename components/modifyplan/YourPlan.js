@@ -62,10 +62,10 @@ const YourPlan = () => {
                     {plantings.map((planting, i) => (
                         <div className={styles.planContainer} key={i} onMouseEnter={() => setIsShowActionText(i)} onMouseLeave={() => setIsShowActionText(-1)}>
                             <div className={styles.planHeader}>
-                                <h3>*****</h3>
-                                <h3>{planting.succession}ct</h3>
+                                <h3>{planting.name}</h3>
+                                <h3>{planting.seeds}ct</h3>
                             </div>
-                            <h4 className={styles.planSpecies}>{planting.name}</h4>
+                            <h4 className={styles.planSpecies}>{planting.species}</h4>
                             <div className={styles.planOptionsContainer}>
                                 <h5>{planting.direct_sow ? "Start" : "Direct"}</h5>
                                 <h5>{planting.harvest}</h5>
