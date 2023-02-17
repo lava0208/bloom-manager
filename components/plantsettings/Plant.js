@@ -22,7 +22,7 @@ const Plant = (props) => {
         maturity_late: "",
         light: false,
         depth: "",
-        reBloom: false,
+        rebloom: false,
         indoor_seed_note: "",
         direct_seed_note: "",
         pinch_note: "",
@@ -37,9 +37,9 @@ const Plant = (props) => {
         getPlant(props.id)
     }, [])
 
-    const getPlant = async (id) => {
-        if(id !== 0){
-            var response = await plantService.getById(id);
+    const getPlant = async () => {
+        if(props.id !== 0){
+            var response = await plantService.getById(props.id);
             setPlant(response.data)
         }       
     }
@@ -47,10 +47,17 @@ const Plant = (props) => {
     const savePlant = async () => {
         if (plant.name !== "" && plant.species !== "" && plant.description !== "") {
             plant.user_id = userService.getId();
-            const result = await plantService.create(plant);
-            if(result.status === true){
-                setModalOpen(!modalOpen);
-            }
+            if(props.id === 0){
+                const result = await plantService.create(plant);
+                if(result.status === true){
+                    props.savePlant()
+                }
+            }else{
+                const result = await plantService.update(props.id, plant);
+                if(result.status === true){
+                    props.savePlant()
+                }
+            }            
         } else {
             setError(true);
             setErrorText("Please fill all fields.");
@@ -205,12 +212,12 @@ const Plant = (props) => {
                         <input
                             type="checkbox"
                             id="rebloom"
-                            value={plant.reBloom}
-                            checked={plant.reBloom}
+                            value={plant.rebloom}
+                            checked={plant.rebloom}
                             onChange={(e) => {
                                 setPlant({
                                     ...plant,
-                                    reBloom: e.target.checked,
+                                    rebloom: e.target.checked,
                                 });
                             }}
                         />
@@ -354,7 +361,7 @@ const Plant = (props) => {
                         )
                     }
                     <button onClick={() => { savePlant() }}>Save Changes</button>
-                    <button onClick={() => setModalOpen(!modalOpen)}>Cancel</button>
+                    <button onClick={props.cancelPlant}>Cancel</button>
                 </div>
             </div>
         </>

@@ -3,7 +3,8 @@ import { apiUrl } from 'config';
 export const plantService = {
     getAll,
     create,
-    getById
+    getById,
+    update
 };
 
 const baseUrl = `${apiUrl}/plants`;
@@ -35,6 +36,17 @@ async function getById(id) {
         headers: {
             "Content-Type": "application/json"
         }
+    })
+    return response.json();
+}
+
+async function update(id, params) {
+    const response = await fetch(`${baseUrl}?id=` + id, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(params)
     })
     return response.json();
 }

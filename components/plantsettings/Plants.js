@@ -29,7 +29,7 @@ const Plants = () => {
 
     const refreshFilterdArray = async () => {
         var _filteredArray =  origialArray.filter(
-              (el) => el.name.toLowerCase().includes(query)
+            (el) => el.name.toLowerCase().includes(query)
         )      
 
         setFilteredArray(_filteredArray)
@@ -50,6 +50,13 @@ const Plants = () => {
             setTitle("Edit Plant")
         }
     }
+    const savePlant = () => {
+        setModalOpen(false);
+        getOriginalArray()
+    }
+    const cancelPlant = () => {
+        setModalOpen(false);
+    }
 
     return (
         <>
@@ -65,7 +72,7 @@ const Plants = () => {
                         <div className={styles.plantImage}></div>
                         <div className={styles.plantInfoContainer}>
                             <h3>{plant.name}</h3>
-                            <h4>{plant.variety}</h4>
+                            <h4>{plant.species}</h4>
                             <h5>{plant.description}</h5>
                         </div>
                         {
@@ -84,7 +91,7 @@ const Plants = () => {
                     {title}
                 </ModalHeader>
                 <ModalBody>
-                    <Plant  id={id} />
+                    <Plant  id={id} savePlant={savePlant} cancelPlant={cancelPlant} />
                 </ModalBody>
             </Modal>
         </>
