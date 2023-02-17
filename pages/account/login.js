@@ -29,7 +29,7 @@ const Login = () => {
             if (emailValidation()) {
                 const result = await userService.login(user);
                 if(result.status === true){
-                    await userService.setId(JSON.stringify(result.data[0]._id));
+                    await userService.setId(result.data[0]._id);
                     router.push("/")
                 }else{
                     setError(true);

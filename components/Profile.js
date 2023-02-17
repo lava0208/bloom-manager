@@ -42,6 +42,7 @@ const Profile = () => {
                 setErrMsg(" ");
                 const result = await userService.update(userService.getId(), user);
                 if(result.status === true){
+                    alert(result.message)
                 }else{
                     setErrorText(result.message)
                 }
@@ -50,10 +51,12 @@ const Profile = () => {
     }
 
     const deleteUser = async () => {
-        await userService.delete(userService.getId());
-        localStorage.removeItem("user");
-        localStorage.removeItem("userid");
-        router.push("/account/register");
+        if (confirm('Are you sure you want to close this account?')) {
+            await userService.delete(userService.getId());
+            localStorage.removeItem("user");
+            localStorage.removeItem("userid");
+            router.push("/account/register");
+        }
     }
 
     return (<>

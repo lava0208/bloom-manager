@@ -31,6 +31,7 @@ const Register = () => {
             if (emailValidation()) {
                 const result = await userService.register(user);
                 if(result.status === true){
+                    alert(result.message);
                     await userService.setId(result.data.insertedId);
                     router.push("/account/plan")
                 }else{

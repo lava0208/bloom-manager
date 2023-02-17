@@ -21,6 +21,13 @@ const Sidebar = () => {
 
     const router = useRouter();
 
+    const logout = () => {
+        if (confirm('Are you sure you want to logout?')) {
+            userService.removeUser();
+            router.push("/account/login")
+        }
+    }
+
     return (
         <div className={styles.container}>
             <div className={styles.top}>
@@ -59,7 +66,7 @@ const Sidebar = () => {
                     <div className={styles.profilePicture} onClick={() => router.push("/profile")}></div>
                     <div className={styles.accountInfoContainer}>
                         <h4 onClick={() => router.push("/profile")}>{name}</h4>
-                        <h5 onClick={() => { userService.removeUser(), router.push("/account/login") }}>Log Out</h5>
+                        <h5 onClick={() => logout()}>Log Out</h5>
                     </div>
                 </div>
             </div>
