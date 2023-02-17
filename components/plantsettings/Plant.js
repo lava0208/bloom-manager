@@ -55,6 +55,7 @@ const Plant = (props) => {
             }else{
                 const result = await plantService.update(props.id, plant);
                 if(result.status === true){
+                    alert(result.message);
                     props.savePlant()
                 }
             }            

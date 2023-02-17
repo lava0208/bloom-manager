@@ -59,8 +59,10 @@ const Plants = () => {
     }
 
     const deletePlant = async (id) => {
-        await plantService.delete(id);
-        getOriginalArray();
+        if (confirm('Are you sure you want to delete this plan?')) {
+            await plantService.delete(id);
+            getOriginalArray();
+        }
     }
 
     return (
