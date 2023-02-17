@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import moment from "moment";
 
-import { plantService, plantingService, taskService } from "services";
+import { plantService, taskService } from "services";
 
 import styles from "~styles/components/masterplan/byplantdetail.module.scss";
 
@@ -26,7 +26,8 @@ const ByPlantDetail = (props) => {
         title: "",
         date: "",
         duration: "",
-        note: ""
+        note: "",
+        type: ""
     });
 
     
@@ -41,7 +42,8 @@ const ByPlantDetail = (props) => {
                     title: "",
                     date: "",
                     duration: "",
-                    note: ""
+                    note: "",
+                    type: ""
                 }
             )
         }
@@ -138,10 +140,17 @@ const ByPlantDetail = (props) => {
                                     <span>{task.duration}</span> days
                                 </div>
                             </div>
-                            <button>{moment(task.date).format("MMMM Do, YYYY")}</button>
+                            <button>{moment(task.date).format("MMMM DD, YYYY")}</button>
                         </div>
                         <div className={styles.plantOptionsFooter}>
-                            <select>
+                            <select 
+                                value={task.type}
+                                onChange={(e) => {
+                                    let _taskArr = [...taskArr];
+                                    _taskArr[i].type = e.target.value;
+                                    setTaskArr(_taskArr);
+                                }}
+                            >
                                 <option value="complete">Complete</option>
                                 <option value="incomplete">InComplete</option>
                                 <option value="overdue">Overdue</option>
