@@ -9,19 +9,19 @@ import styles from "~styles/components/masterplan/byplant.module.scss";
 import ByPlantDetail from "./ByPlantDetail";
 
 const ByPlant = () => {
-    const [planEditModalOpen, setPlanEditModalOpen] = useState(false);
+    const [plantingEditModalOpen, setPlantingEditModalOpen] = useState(false);
     const [plantings, setPlantings] = useState([]);
     const [plantId, setPlantId] = useState("");
     const [planting, setPlanting] = useState({});
     const openPlanEditModal = async (id, plant_id) => {
-        setPlanEditModalOpen(true);
+        setPlantingEditModalOpen(true);
         setPlantId(plant_id);
         var _result = await plantingService.getById(id);
         setPlanting(_result.data);
     }
     const savePlanting = () => {
         getAllPlantings();
-        setPlanEditModalOpen(false);
+        setPlantingEditModalOpen(false);
     }
 
     useEffect(() => {
@@ -33,6 +33,9 @@ const ByPlant = () => {
         setPlantings(_result.data);
     }
 
+    const close = () => {
+        setPlantingEditModalOpen(false)
+    }
 
     return (
         <div className={styles.container}>
@@ -67,9 +70,9 @@ const ByPlant = () => {
                     </div>
                 ))}
             </div>
-            <Modal toggle={() => setPlanEditModalOpen(!planEditModalOpen)} isOpen={planEditModalOpen} centered modalClassName="modifyPlanModal">
+            <Modal toggle={() => setPlantingEditModalOpen(!plantingEditModalOpen)} isOpen={plantingEditModalOpen} centered modalClassName="modifyPlanModal">
                 <ModalBody>
-                    <ByPlantDetail plantId={plantId} planting={planting} savePlanting={savePlanting} onClick={() => setModalOpen(false)} />
+                    <ByPlantDetail plantId={plantId} planting={planting} savePlanting={savePlanting} close={close} />
                 </ModalBody>
             </Modal>
         </div>

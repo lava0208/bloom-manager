@@ -8,18 +8,20 @@ export default async function handler(req, res) {
     switch (req.method) {
         //... create a task
         case "POST":
-            await db.collection("tasks").insertOne(req.body);
-            return res.json({ status: true, data: 'A task is created successfully.' });
+            await db.collection("tasks").insertMany(req.body);
+            return res.json({ status: true, message: 'A task is created successfully.' });
 
         //... get all tasks or task by id
         case "GET":
-            const { taskid } = req.query;
-            if(taskid === undefined){
+            if(req.query.id === undefined && req.query.plantingid === undefined){
                 let tasks = await db.collection("tasks").find({}).toArray();
                 return res.json({ status: true, data: tasks });
-            }else{
-                let task = await db.collection("tasks").findOne({_id: new ObjectId(taskid)});
+            }else if(req.query.plantingid === undefined){
+                let task = await db.collection("tasks").findOne({_id: new ObjectId(req.query.id)});
                 return res.json({ status: true, data: task });
+            }else{
+                let tasks = await db.collection("tasks").find({planting_id: req.query.plantingid}).toArray();
+                return res.json({ status: true, data: tasks });
             }
 
         //... update a task

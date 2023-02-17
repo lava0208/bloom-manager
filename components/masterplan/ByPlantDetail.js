@@ -1,49 +1,62 @@
 import React, { useState, useEffect } from "react";
 import moment from "moment";
 
-import { userService, planService, plantService, plantingService } from "services";
+import { plantService, taskService } from "services";
 
 import styles from "~styles/components/masterplan/byplantdetail.module.scss";
 
 const ByPlantDetail = (props) => {
-    const [planting, setPlanting] = useState({
-        plan_id: "",
-        plant_id: props.plantId,
-        seeds: "",
-        harvest: "",
-        direct_sow: false,
-        pinch: false,
-        pot_on: false,
-        succession: "",
-        spacing: ""
-    })
+    const [taskArr, setTaskArr] = useState([]);
 
     useEffect(() => {        
         if(props.planting){
             //... edit page
-            getPlanting();
+            getPlantAndTasks();
         }
     }, [props.planting])
 
     const [plant, setPlant] = useState({});
 
-
-    const getPlanting = async () => {
+    const getPlantAndTasks = async () => {
         var _plant = await plantService.getById(props.plantId);
         setPlant(_plant.data);
-        setPlanting(props.planting)
+        var _tasks = await taskService.getByPlantingId(props.planting._id);
+        console.log(_tasks);
+        setTaskArr(_tasks.data)
     }
 
-    console.log(planting);
     const [customTask, setCustomTask] = useState({
+        planting_id: props.planting._id,
         title: "",
         date: "",
         duration: "",
         note: ""
     });
-    const saveCustomTask = () => {
-        console.log(customTask)
+
+    
+    const addCustomTask = () => {
+        if(customTask.title === "" || customTask.date === "" || customTask.duration === "" || customTask.note === ""){
+            alert("Please fill all fields")
+        }else{
+            setTaskArr(taskArr => [...taskArr, customTask])
+            setCustomTask(
+                ...taskArr, {
+                    planting_id: props.planting._id,
+                    title: "",
+                    date: "",
+                    duration: "",
+                    note: ""
+                }
+            )
+        }
     }
+
+    const save = async () => {
+        var _result = await taskService.create(taskArr);
+        alert(_result.message);
+        props.close();
+    }
+
 
     return (
         <div className={styles.container}>
@@ -106,21 +119,21 @@ const ByPlantDetail = (props) => {
                             });
                         }}
                     />
-                    <button onClick={() => saveCustomTask()}>Add</button>
+                    <button onClick={() => addCustomTask()}>Add</button>
                 </div>
             </div>
             <div className={styles.plantOptionsContainer}>
-                {/* {plantings.map((option, i) => (
+                {taskArr.map((task, i) => (
                     <div className={styles.plantOptionRow} key={i}>
                         <div className={styles.plantOptionsHeader}>
                             <div className={styles.plantOptionName}>
-                                <h3>{option.name}</h3>
+                                <h3>{task.title}</h3>
                                 <div>
-                                    <input placeholder="" />
-                                    <span>{option.day}</span> days
+                                    <input placeholder="" value={task.duration} />
+                                    <span>{task.duration}</span> days
                                 </div>
                             </div>
-                            <button>{moment(option.date).format("MMMM Do, YYYY")}</button>
+                            <button>{moment(task.date).format("MMMM Do, YYYY")}</button>
                         </div>
                         <div className={styles.plantOptionsFooter}>
                             <select>
@@ -130,16 +143,16 @@ const ByPlantDetail = (props) => {
                                 <option value="notdue">Not Overdue</option>
                             </select>
                             <div className={styles.buttons}>
-                                <button>Duplicate</button>
+                                {/* <button>Duplicate</button>  */}
                                 <button>Delete</button>
                             </div>
                         </div>
                     </div>
-                ))} */}
+                ))}
             </div>
             <div className={styles.buttonsContainer}>
-                <button onClick={props.savePlant}>Save</button>
-                <button onClick={props.cancelPlant}>Cancel</button>
+                <button onClick={() => save()}>Save</button>
+                <button onClick={props.close}>Cancel</button>
             </div>
         </div>
     );
