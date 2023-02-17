@@ -31,7 +31,7 @@ const CurrentPlan = (props) => {
         spacing: ""
     })
 
-    useEffect(() => {        
+    useEffect(() => {
         if(props.planting){
             //... edit page
             getPlanting();

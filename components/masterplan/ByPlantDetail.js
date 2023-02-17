@@ -1,11 +1,40 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import moment from "moment";
+
+import { userService, planService, plantService, plantingService } from "services";
 
 import styles from "~styles/components/masterplan/byplantdetail.module.scss";
 
-import { byPlant } from "~lib/dummy";
-
 const ByPlantDetail = (props) => {
+    const [planting, setPlanting] = useState({
+        plan_id: "",
+        plant_id: props.plantId,
+        seeds: "",
+        harvest: "",
+        direct_sow: false,
+        pinch: false,
+        pot_on: false,
+        succession: "",
+        spacing: ""
+    })
+
+    useEffect(() => {        
+        if(props.planting){
+            //... edit page
+            getPlanting();
+        }
+    }, [props.planting])
+
+    const [plant, setPlant] = useState({});
+
+
+    const getPlanting = async () => {
+        var _plant = await plantService.getById(props.plantId);
+        setPlant(_plant.data);
+        setPlanting(props.planting)
+    }
+
+    console.log(planting);
     const [customTask, setCustomTask] = useState({
         title: "",
         date: "",
@@ -15,19 +44,20 @@ const ByPlantDetail = (props) => {
     const saveCustomTask = () => {
         console.log(customTask)
     }
+
     return (
         <div className={styles.container}>
             <div className={styles.plantTitle}>
-                <h3>{props.activePlant.name}</h3>
-                <h5>Planting ID #{props.activePlant.id}</h5>
+                <h3>{plant.species}</h3>
+                <h5>Planting ID #{props.planting._id}</h5>
             </div>
             <div className={styles.plantInfoContainer}>
                 <div className={styles.detailContainer}>
                     <div className={styles.detailImage}></div>
                     <div className={styles.detailInfo}>
-                        <h3>Cosmos</h3>
-                        <h5>{props.activePlant.name}</h5>
-                        <h6>{props.activePlant.description}</h6>
+                        <h3>{plant.name}</h3>
+                        <h5>{plant.species}</h5>
+                        <h6>{plant.description}</h6>
                     </div>
                 </div>
                 <div className={styles.taskContainer}>
@@ -80,7 +110,7 @@ const ByPlantDetail = (props) => {
                 </div>
             </div>
             <div className={styles.plantOptionsContainer}>
-                {byPlant.plantOptions.map((option, i) => (
+                {/* {plantings.map((option, i) => (
                     <div className={styles.plantOptionRow} key={i}>
                         <div className={styles.plantOptionsHeader}>
                             <div className={styles.plantOptionName}>
@@ -105,7 +135,7 @@ const ByPlantDetail = (props) => {
                             </div>
                         </div>
                     </div>
-                ))}
+                ))} */}
             </div>
             <div className={styles.buttonsContainer}>
                 <button onClick={props.savePlant}>Save</button>

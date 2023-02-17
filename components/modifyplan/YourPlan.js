@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Modal, ModalBody } from "reactstrap";
 
-import { plantService, plantingService } from "services";
+import { plantingService } from "services";
 import CurrentPlan from "./CurrentPlan";
 import UserSettings from "~components/plantsettings/UserSettings";
 
