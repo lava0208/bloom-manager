@@ -9,11 +9,8 @@ const ByPlantDetail = (props) => {
     const [taskArr, setTaskArr] = useState([]);
 
     useEffect(() => {        
-        if(props.planting){
-            //... edit page
-            getPlantAndTasks();
-        }
-    }, [props.planting])
+        getPlantAndTasks();
+    }, [])
 
     const [plant, setPlant] = useState({});
 
@@ -21,7 +18,6 @@ const ByPlantDetail = (props) => {
         var _plant = await plantService.getById(props.plantId);
         setPlant(_plant.data);
         var _tasks = await taskService.getByPlantingId(props.planting._id);
-        console.log(_tasks);
         setTaskArr(_tasks.data)
     }
 
@@ -52,9 +48,11 @@ const ByPlantDetail = (props) => {
     }
 
     const save = async () => {
-        var _result = await taskService.create(taskArr);
-        alert(_result.message);
-        props.close();
+        if (confirm('Are you sure you want to update?')) {
+            var _result = await taskService.update(props.planting._id, taskArr);
+            alert(_result.message);
+            props.close();
+        }
     }
 
 

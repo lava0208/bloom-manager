@@ -53,7 +53,7 @@ async function getByPlantingId(id) {
 }
 
 async function update(id, params) {
-    const response = await fetch(`${baseUrl}?id=` + id, {
+    const response = await fetch(`${baseUrl}?plantingid=` + id, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json"
