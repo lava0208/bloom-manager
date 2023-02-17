@@ -8,8 +8,14 @@ export default async function handler(req, res) {
     switch (req.method) {
         //... create plantings
         case "POST":
-            await db.collection("plantings").insertOne(req.body);
-            return res.json({ status: true, data: 'Planting is created successfully.' });
+            //... check if there is same plan id and plant id
+            let existOne = await db.collection("plantings").find({plan_id: req.body.plan_id, plant_id: req.body.plant_id}).toArray();
+            if(existOne.length === 0){
+                await db.collection("plantings").insertOne(req.body);
+                return res.json({ status: true, message: 'Planting is created successfully.' });
+            }else{
+                return res.json({ status: false, message: 'The Planting was already planed.' });
+            }
 
         //... get all plantings or planing by id
         case "GET":

@@ -35,10 +35,12 @@ const AvailablePlans = () => {
         setFilteredArray(_filteredArray)
     }
 
+    const [plantId, setPlantId] = useState("");
     const [isShowActionText, setIsShowActionText] = useState(-1);
     const [modalOpen, setModalOpen] = useState(false);
-    const openCreateModal = () => {
+    const openCreateModal = (id) => {
         setModalOpen(true);
+        setPlantId(id);
     }
     const savePlanting = () => {
         setModalOpen(false);
@@ -54,18 +56,18 @@ const AvailablePlans = () => {
                 <input className={styles.searchButton} placeholder={'Search'} onChange={(e) => setQuery(e.target.value)} />
             </div>
             <div className={styles.plansContainer}>
-                {filteredArray.map((plan, i) => (
+                {filteredArray.map((plant, i) => (
                     <div className={styles.planContainer} key={i} onMouseEnter={() => setIsShowActionText(i)} onMouseLeave={() => setIsShowActionText(-1)}>
                         <div className={styles.planImage}></div>
                         <div className={styles.planInfoContainer}>
-                            <h3>{plan.name}</h3>
-                            <h4>{plan.species}</h4>
-                            <h5>{plan.description}</h5>
+                            <h3>{plant.name}</h3>
+                            <h4>{plant.species}</h4>
+                            <h5>{plant.description}</h5>
                         </div>
                         {
                             i === isShowActionText && (
                                 <div className={styles.plantHoverText}>
-                                    <button onClick={() => openCreateModal()}>Add</button>
+                                    <button onClick={() => openCreateModal(plant._id)}>Add</button>
                                 </div>
                             )
                         }
@@ -74,7 +76,7 @@ const AvailablePlans = () => {
             </div>
             <Modal toggle={() => setModalOpen(!modalOpen)} isOpen={modalOpen} centered modalClassName="modifyPlanModal">
                 <ModalBody>
-                    <CurrentPlan title="Add Crimson Glory" savePlanting={savePlanting} resetPlan={resetPlan} />
+                    <CurrentPlan title="Add Crimson Glory" plantId={plantId}  savePlanting={savePlanting} />
                 </ModalBody>
             </Modal>
         </>
