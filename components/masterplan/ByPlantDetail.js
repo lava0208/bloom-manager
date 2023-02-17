@@ -55,6 +55,13 @@ const ByPlantDetail = (props) => {
         }
     }
 
+    const deleteTask = async (id) => {
+        if (confirm('Are you sure you want to delete?')) {
+            var _result = await taskService.delete(id);
+            alert(_result.message);
+            props.close();
+        }
+    }
 
     return (
         <div className={styles.container}>
@@ -142,7 +149,7 @@ const ByPlantDetail = (props) => {
                             </select>
                             <div className={styles.buttons}>
                                 {/* <button>Duplicate</button>  */}
-                                <button>Delete</button>
+                                <button onClick={() => deleteTask(task._id)}>Delete</button>
                             </div>
                         </div>
                     </div>
