@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import moment from "moment";
 
-import { plantService, taskService } from "services";
+import { plantService, plantingService, taskService } from "services";
 
 import styles from "~styles/components/masterplan/byplantdetail.module.scss";
 
@@ -17,12 +17,12 @@ const ByPlantDetail = (props) => {
     const getPlantAndTasks = async () => {
         var _plant = await plantService.getById(props.plantId);
         setPlant(_plant.data);
-        var _tasks = await taskService.getByPlantingId(props.planting._id);
+        var _tasks = await taskService.getByPlantingId(props.plantingId);
         setTaskArr(_tasks.data)
     }
 
     const [customTask, setCustomTask] = useState({
-        planting_id: props.planting._id,
+        planting_id: props.plantingId,
         title: "",
         date: "",
         duration: "",
@@ -37,7 +37,7 @@ const ByPlantDetail = (props) => {
             setTaskArr(taskArr => [...taskArr, customTask])
             setCustomTask(
                 ...taskArr, {
-                    planting_id: props.planting._id,
+                    planting_id: props.plantingId,
                     title: "",
                     date: "",
                     duration: "",
@@ -49,7 +49,7 @@ const ByPlantDetail = (props) => {
 
     const save = async () => {
         if (confirm('Are you sure you want to update?')) {
-            var _result = await taskService.update(props.planting._id, taskArr);
+            var _result = await taskService.update(props.plantingId, taskArr);
             alert(_result.message);
             props.close();
         }
@@ -60,7 +60,7 @@ const ByPlantDetail = (props) => {
         <div className={styles.container}>
             <div className={styles.plantTitle}>
                 <h3>{plant.species}</h3>
-                <h5>Planting ID #{props.planting._id}</h5>
+                <h5>Planting ID #{props.plantingId}</h5>
             </div>
             <div className={styles.plantInfoContainer}>
                 <div className={styles.detailContainer}>
@@ -127,7 +127,7 @@ const ByPlantDetail = (props) => {
                             <div className={styles.plantOptionName}>
                                 <h3>{task.title}</h3>
                                 <div>
-                                    <input placeholder="" value={task.duration} />
+                                    <input placeholder="" value={task.duration} readOnly />
                                     <span>{task.duration}</span> days
                                 </div>
                             </div>

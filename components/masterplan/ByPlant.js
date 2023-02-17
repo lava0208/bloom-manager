@@ -12,12 +12,12 @@ const ByPlant = () => {
     const [plantingEditModalOpen, setPlantingEditModalOpen] = useState(false);
     const [plantings, setPlantings] = useState([]);
     const [plantId, setPlantId] = useState("");
-    const [planting, setPlanting] = useState({});
+    const [plantingId, setPlantingId] = useState("");
+    
     const openPlanEditModal = async (id, plant_id) => {
         setPlantingEditModalOpen(true);
         setPlantId(plant_id);
-        var _result = await plantingService.getById(id);
-        setPlanting(_result.data);
+        setPlantingId(id);
     }
     const savePlanting = () => {
         getAllPlantings();
@@ -72,7 +72,7 @@ const ByPlant = () => {
             </div>
             <Modal toggle={() => setPlantingEditModalOpen(!plantingEditModalOpen)} isOpen={plantingEditModalOpen} centered modalClassName="modifyPlanModal">
                 <ModalBody>
-                    <ByPlantDetail plantId={plantId} planting={planting} savePlanting={savePlanting} close={close} />
+                    <ByPlantDetail plantId={plantId} plantingId={plantingId} savePlanting={savePlanting} close={close} />
                 </ModalBody>
             </Modal>
         </div>
