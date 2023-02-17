@@ -39,7 +39,9 @@ export default async function handler(req, res) {
                         harvest: req.body.harvest,
                         direct_sow: req.body.direct_sow,
                         pinch: req.body.pinch,
-                        pot_on: req.body.pot_on
+                        pot_on: req.body.pot_on,
+                        spacing: req.body.spacing,
+                        succession: req.body.succession
                     },
                 }
             );

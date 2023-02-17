@@ -68,8 +68,13 @@ const CurrentPlan = (props) => {
     
 
     const save = async () => {
-        const result = await plantingService.create(planting);
-        alert(result.message);
+        if(props.planting !== undefined){
+            const _result = await plantingService.update(props.planting._id , planting);
+            alert(_result.message);
+        }else{
+            const _result = await plantingService.create(planting);
+            alert(_result.message);
+        }
         props.savePlanting();
     }
 
@@ -121,7 +126,7 @@ const CurrentPlan = (props) => {
                         <h4>Harvest</h4>
                         {harvests.map((element, i) => (
                             <button key={i} 
-                                onClick={() => {setActiveHarvest(element.value), setPlanting({...planting, harvest: element.value === 1 ? "early" : element.value === 2 ? "regular" : "late"})}} 
+                                onClick={() => {setActiveHarvest(element.value), setPlanting({...planting, harvest: element.value === 1 ? "Early" : element.value === 2 ? "Regular" : "Late"})}} 
                                 className={activeHarvest === i + 1 ?  styles.selected : ''}
                                 value={planting.harvest}
                             >
