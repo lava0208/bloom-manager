@@ -85,7 +85,7 @@ const CurrentPlan = (props) => {
                 </div>
             </div>
             <div className={styles.buttonsContainer}>
-                <button onClick={props.savePlan}>Save Changes</button>
+                <button onClick={props.savePlanting}>Save Changes</button>
                 <button onClick={props.resetPlan}>Reset</button>
             </div>
         </div>

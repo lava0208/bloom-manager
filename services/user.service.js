@@ -78,7 +78,7 @@ function setId(data){
 
 function getId(){
     if (typeof window !== 'undefined') {
-        return JSON.parse(localStorage.getItem("userid"));
+        return localStorage.getItem("userid");
     }
 }
 
