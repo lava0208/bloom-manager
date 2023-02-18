@@ -2,6 +2,7 @@ import { apiUrl } from 'config';
 
 export const taskService = {
     getAll,
+    getAllByDate,
     create,
     getById,
     getByPlantingId,
@@ -13,6 +14,16 @@ const baseUrl = `${apiUrl}/tasks`;
 
 async function getAll() {
     const response = await fetch(`${baseUrl}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+    return response.json();
+}
+
+async function getAllByDate() {
+    const response = await fetch(`${baseUrl}?date=all`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json"

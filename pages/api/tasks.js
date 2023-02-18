@@ -1,5 +1,6 @@
 import clientPromise from "../../lib/mongodb";
 import { ObjectId } from "mongodb";
+import moment from "moment";
 
 export default async function handler(req, res) {
     const client = await clientPromise;
@@ -13,14 +14,31 @@ export default async function handler(req, res) {
 
         //... get all tasks or task by id
         case "GET":
-            if(req.query.id === undefined && req.query.plantingid === undefined){
-                let tasks = await db.collection("tasks").find({}).toArray();
-                return res.json({ status: true, data: tasks });
-            }else if(req.query.plantingid === undefined){
+            if(req.query.id){
                 let task = await db.collection("tasks").findOne({_id: new ObjectId(req.query.id)});
                 return res.json({ status: true, data: task });
-            }else{
+            }else if(req.query.plantingid){
                 let tasks = await db.collection("tasks").find({planting_id: req.query.plantingid}).toArray();
+                return res.json({ status: true, data: tasks });
+            }else if(req.query.date){
+                let data = {};
+                data.today = await db.collection("tasks").find({scheduled_at: moment().format('YYYY/MM/DD')}).toArray();
+                data.tomorrow = await db.collection("tasks").find({scheduled_at: moment().add(1, 'days').format('YYYY/MM/DD')}).toArray();
+                data.week = await db.collection("tasks").find({
+                    scheduled_at: {
+                        $gt: moment().add(-7, 'days').format('YYYY/MM/DD'),
+                        $lt: moment().add(1, 'days').format('YYYY/MM/DD')
+                    }
+                }).toArray();
+                data.overdue = await db.collection("tasks").find({
+                    scheduled_at: {
+                        $gt: moment().add(-1000, 'days').format('YYYY/MM/DD'),
+                        $lt: moment().add(1, 'days').format('YYYY/MM/DD')
+                    }
+                }).toArray();
+                return res.json({ status: true, data: data });
+            }else{
+                let tasks = await db.collection("tasks").find({}).toArray();
                 return res.json({ status: true, data: tasks });
             }
 

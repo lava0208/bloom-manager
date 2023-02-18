@@ -24,15 +24,17 @@ const ByPlantDetail = (props) => {
     const [customTask, setCustomTask] = useState({
         planting_id: props.plantingId,
         title: "",
-        date: "",
+        scheduled_at: "",
         duration: "",
         note: "",
-        type: ""
+        type: "",
+        rescheduled_at: "",
+        completed_at: ""
     });
 
     
     const addCustomTask = () => {
-        if(customTask.title === "" || customTask.date === "" || customTask.duration === "" || customTask.note === ""){
+        if(customTask.title === "" || customTask.scheduled_at === "" || customTask.duration === "" || customTask.note === ""){
             alert("Please fill all fields")
         }else{
             setTaskArr(taskArr => [...taskArr, customTask])
@@ -40,10 +42,12 @@ const ByPlantDetail = (props) => {
                 ...taskArr, {
                     planting_id: props.plantingId,
                     title: "",
-                    date: "",
+                    scheduled_at: "",
                     duration: "",
                     note: "",
-                    type: ""
+                    type: "",
+                    rescheduled_at: "",
+                    completed_at: ""
                 }
             )
         }
@@ -96,11 +100,11 @@ const ByPlantDetail = (props) => {
                     <input
                         type="text"
                         placeholder="Date"
-                        value={customTask.date}
+                        value={customTask.scheduled_at}
                         onChange={(e) => {
                             setCustomTask({
                                 ...customTask,
-                                date: e.target.value,
+                                scheduled_at: e.target.value,
                             });
                         }}
                     />
@@ -140,7 +144,7 @@ const ByPlantDetail = (props) => {
                                     <span>{task.duration}</span> days
                                 </div>
                             </div>
-                            <button>{moment(task.date).format("MMMM DD, YYYY")}</button>
+                            <button>{moment(task.scheduled_at).format("MMMM DD, YYYY")}</button>
                         </div>
                         <div className={styles.plantOptionsFooter}>
                             <select 
