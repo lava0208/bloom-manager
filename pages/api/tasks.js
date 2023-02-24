@@ -48,6 +48,7 @@ export default async function handler(req, res) {
                         $lt: moment().add(1, 'days').format('YYYY/MM/DD')
                     }
                 }).toArray();
+                data.all = await db.collection("tasks").find({}).toArray();
                 return res.json({ status: true, data: data });
             }else{
                 let tasks = await db.collection("tasks").find({}).toArray();
