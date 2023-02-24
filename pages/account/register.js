@@ -12,7 +12,7 @@ const Register = () => {
         name: "",
         email: "",
         password: "",
-        image: ""
+        profile_path: ""
     });
 
     const [error, setError] = useState(false);
@@ -36,14 +36,13 @@ const Register = () => {
     const handleUpload = async () => {
         setUploading(true);
         try {
-            console.log(selectedFile);
             if(selectedFile !== ""){
                 const formData = new FormData();
                 formData.append("myImage", selectedFile);
                 await axios.post("/api/upload", formData)
                 .then(response => {
                     if(response.data.status == true){
-                        user.image = response.data.data
+                        user.profile_path = response.data.data
                         setUploading(false);
                     }
                 });

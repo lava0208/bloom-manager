@@ -44,14 +44,19 @@
                 color: $white;
                 font-size: 1.5rem;
                 font-weight: 700;
+                margin-top: 1rem;
             }
 
             .profileImage {
                 width: 200px;
                 height: 200px;
-                background-color: $white;
                 border-radius: 50%;
                 margin: 1rem auto;
+                img{
+                    max-height: 200px;
+                    max-width: 100%;
+                    border-radius: 50%;
+                }
             }
 
             .inputContainer {
