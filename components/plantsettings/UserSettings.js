@@ -1,13 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { userService, planService } from "services";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { GoogleMap, LoadScript } from '@react-google-maps/api';
 
 import styles from "~styles/components/plantsettings/userSettings.module.scss";
+
+const containerStyle = {
+    width: '100%',
+    height: '100%'
+};
+
+const center = {
+    lat: -3.745,
+    lng: -38.523
+};
 
 const UserSettings = (props) => {
     const [userSettings, setUserSettings] = useState({
         name: "",
-        last_frost: "",
-        first_frost: "",
+        last_frost: new Date(),
+        first_frost: new Date(),
         location: ""
     });
 
@@ -36,28 +49,28 @@ const UserSettings = (props) => {
             <div className={styles.userSettingsPaper}>
                 <div className={styles.userSettingsOptionsContainer}>
                     <h2 className="text-center">{userSettings && userSettings.name ? userSettings.name : "2023 Plan Settings"}</h2>
-                    <div className={styles.userSettingsInputRow}>
-                        <input
-                            type="text"
+                    <div className={styles.userSettingsInputRow}>                    
+                        <DatePicker
                             placeholder="Last Frost"
+                            selected={userSettings.last_frost}
                             value={userSettings.last_frost}
                             onChange={(e) => {
                                 setUserSettings({
                                     ...userSettings,
-                                    last_frost: e.target.value,
+                                    last_frost: e,
                                 });
                             }}
                         />
                     </div>
                     <div className={styles.userSettingsInputRow}>
-                        <input
-                            type="text"
+                        <DatePicker
                             placeholder="First Frost"
+                            selected={userSettings.first_frost}
                             value={userSettings.first_frost}
                             onChange={(e) => {
                                 setUserSettings({
                                     ...userSettings,
-                                    first_frost: e.target.value,
+                                    first_frost: e,
                                 });
                             }}
                         />
@@ -72,7 +85,19 @@ const UserSettings = (props) => {
                     </div>
                     <div className={styles.userSettingsInputRow}>
                         <div className={styles.map}>
-                            {userSettings.location ? userSettings.location.country + " " + userSettings.location.city : ""}
+                            {/* {userSettings.location ? userSettings.location.country + " " + userSettings.location.city : ""} */}
+                            <LoadScript
+                                googleMapsApiKey={process.env.GOOGLE_MAP_KEY}
+                            >
+                                <GoogleMap
+                                    mapContainerStyle={containerStyle}
+                                    center={center}
+                                    zoom={10}
+                                >
+                                    { /* Child components, such as markers, info windows, etc. */}
+                                    <></>
+                                </GoogleMap>
+                            </LoadScript>
                         </div>
                     </div>
                 </div>

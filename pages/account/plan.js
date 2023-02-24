@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { userService, planService } from "services";
 import { GoogleMap, LoadScript } from '@react-google-maps/api';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import styles from "~styles/pages/account/register.module.scss";
 
 const containerStyle = {
@@ -21,8 +23,8 @@ const Plan = () => {
         name: "",
         location: "",
         size: "",
-        last_frost: "",
-        first_frost: ""
+        last_frost: new Date(),
+        first_frost: new Date()
     });
     const [error, setError] = useState(false);
 
@@ -105,31 +107,30 @@ const Plan = () => {
                     </div>
                 </div>
 
-                <input
-                    type="text"
-                    className={styles.input}
+                <DatePicker
                     placeholder="Last Frost date"
-                    value={plan.last_frost}
+                    className={styles.input}
+                    selected={plan.last_frost}
                     onChange={(e) => {
                         setPlan({
                             ...plan,
-                            last_frost: e.target.value,
+                            last_frost: e,
+                        });
+                    }}
+                />
+                
+                <DatePicker
+                    placeholder="First Frost date"
+                    className={styles.input}
+                    selected={plan.first_frost} 
+                    onChange={(e) => {
+                        setPlan({
+                            ...plan,
+                            first_frost: e,
                         });
                     }}
                 />
 
-                <input
-                    type="text"
-                    className={styles.input}
-                    placeholder="First Frost date"
-                    value={plan.first_frost}
-                    onChange={(e) => {
-                        setPlan({
-                            ...plan,
-                            first_frost: e.target.value,
-                        });
-                    }}
-                />
                 {
                     error && (
                         <p className={styles.errorText}>Please fill all fields.</p>
