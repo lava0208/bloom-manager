@@ -2,8 +2,18 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { userService, planService } from "services";
-
+import { GoogleMap, LoadScript } from '@react-google-maps/api';
 import styles from "~styles/pages/account/register.module.scss";
+
+const containerStyle = {
+    width: '100%',
+    height: '100%'
+};
+
+const center = {
+    lat: -3.745,
+    lng: -38.523
+};
 
 const Plan = () => {
     const [plan, setPlan] = useState({
@@ -22,12 +32,12 @@ const Plan = () => {
         if (plan.name !== "" && plan.location !== "" && plan.size !== "") {
             plan.userid = userService.getId();
             const result = await planService.create(plan)
-            if(result.status === true){
+            if (result.status === true) {
                 alert(result.message);
                 router.push("/account/payment")
-            }else{
+            } else {
                 setError(true);
-            }      
+            }
         } else {
             setError(true);
         }
@@ -79,7 +89,20 @@ const Plan = () => {
                             }}
                         />
                     </div>
-                    <div className={styles.detailsLocationContainer}></div>
+                    <div className={styles.detailsLocationContainer}>
+                        <LoadScript
+                            googleMapsApiKey={process.env.GOOGLE_MAP_KEY}
+                        >
+                            <GoogleMap
+                                mapContainerStyle={containerStyle}
+                                center={center}
+                                zoom={10}
+                            >
+                                { /* Child components, such as markers, info windows, etc. */}
+                                <></>
+                            </GoogleMap>
+                        </LoadScript>
+                    </div>
                 </div>
 
                 <input
