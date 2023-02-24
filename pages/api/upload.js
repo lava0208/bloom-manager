@@ -11,7 +11,7 @@ export const config = {
 const readFile = (req, saveLocally, fields = formidable.fields, files = formidable.Files) => {
     const options = formidable.Options = {};
     if (saveLocally) {
-        options.uploadDir = path.join(process.cwd(), "/public/assets");
+        options.uploadDir = path.join(process.cwd(), "/public/assets/upload");
         options.filename = (name, ext, path, form) => {
             return Date.now().toString() + "_" + path.originalFilename;
         };
@@ -28,9 +28,9 @@ const readFile = (req, saveLocally, fields = formidable.fields, files = formidab
 
 const handler = async (req, res) => {
     try {
-        await fs.readdir(path.join(process.cwd() + "/public", "/assets"));
+        await fs.readdir(path.join(process.cwd() + "/public", "/assets/upload"));
     } catch (error) {
-        await fs.mkdir(path.join(process.cwd() + "/public", "/assets"));
+        await fs.mkdir(path.join(process.cwd() + "/public", "/assets/upload"));
     }
     const file = await readFile(req, true);
     const fileName = file.files.myImage.newFilename;
