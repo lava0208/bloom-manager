@@ -121,8 +121,8 @@ const Plant = (props) => {
                     />
                     {selectedImage ? (
                         <img src={selectedImage} alt="profile" />
-                    ) : (
-                        <img src={plant.image ? "/assets/upload/" + plant.image : ""} alt="image" />
+                    ) : ( plant.image &&
+                        <img src={"/assets/upload/"} alt="image" />
                     )}
                 </label>
                 <div className={styles.inputContainer}>
