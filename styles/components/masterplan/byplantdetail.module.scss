@@ -229,3 +229,14 @@
         }
     }
 }
+
+@media screen and (max-width: 576px) {
+    .plantInfoContainer {
+        display: block;
+        padding: 2rem 0;
+        .detailContainer,
+        .taskContainer {
+            width: 100%;
+        }
+    }    
+}

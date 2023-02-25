@@ -109,3 +109,21 @@
         }
     }
 }
+
+@media screen and (max-width: 576px) {
+    .eventContainer {
+        display: block;
+    }
+    .noteContainer,
+    .taskContainer {
+        width: 100%;
+        margin-bottom: 1rem;
+        display: block;
+    }
+    .noteContainer {
+        display: block;
+        .noteImage {
+            height: 150px;
+        }
+    }
+}

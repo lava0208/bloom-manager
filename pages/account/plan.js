@@ -9,7 +9,7 @@ import styles from "~styles/pages/account/register.module.scss";
 
 const containerStyle = {
     width: '100%',
-    height: '100%'
+    height: '150px'
 };
 
 const center = {

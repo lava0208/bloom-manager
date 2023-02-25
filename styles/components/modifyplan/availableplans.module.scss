@@ -20,7 +20,7 @@
         background: transparent;
         border-radius: 15px;
         padding: 4px 1rem;
-        width: 250px;
+        max-width: 50%;
         text-align: center;
     }
 }
@@ -107,5 +107,20 @@
 
     h5 {
         font-size: 0.75rem;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .planContainer {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 575px) {
+    .planContainer {
+        display: block;
+    }
+    .planImage{
+        height: 150px;
     }
 }
