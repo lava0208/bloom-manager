@@ -146,6 +146,16 @@
     border-radius: 30px;
     flex: 1;
     height: 180px;
+    text-align: center;
+    display: flex;    
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    img{
+        max-height: 180px;
+        max-width: 100%;
+        margin: auto;
+    }
 }
 
 .inputContainer {

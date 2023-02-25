@@ -1,5 +1,8 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useState } from "react";
 import { userService, plantService } from "services";
+
+import axios from "axios";
 
 import styles from "~styles/components/plantsettings/plants.module.scss";
 
@@ -9,6 +12,7 @@ const Plant = (props) => {
         name: "",
         species: "",
         description: "",
+        image: "",
         earliest_seed: "",
         latest_seed: "",
         direct_sow_early: "",
@@ -44,21 +48,55 @@ const Plant = (props) => {
         }       
     }
 
+    const [uploading, setUploading] = useState(false);
+    const [selectedImage, setSelectedImage] = useState("");
+    const [selectedFile, setSelectedFile] = useState("");
+
+    const handleUpload = async () => {
+        setUploading(true);
+        try {
+            if(selectedFile !== ""){
+                const formData = new FormData();
+                formData.append("myImage", selectedFile);
+                await axios.post("/api/upload", formData)
+                .then(response => {
+                    if(response.data.status == true){
+                        plant.image = response.data.data
+                        setUploading(false);
+                    }
+                });
+            }
+            
+        } catch (error) {
+            console.log(error.response?.data);
+        }        
+    };
+
+    const uploadPlant = async () => {
+        if(props.id === 0){
+            const result = await plantService.create(plant);
+            if(result.status === true){
+                props.savePlant()
+            }
+        }else{
+            const result = await plantService.update(props.id, plant);
+            if(result.status === true){
+                alert(result.message);
+                props.savePlant()
+            }
+        }
+    }
+
     const savePlant = async () => {
         if (plant.name !== "" && plant.species !== "" && plant.description !== "") {
             plant.user_id = userService.getId();
-            if(props.id === 0){
-                const result = await plantService.create(plant);
-                if(result.status === true){
-                    props.savePlant()
-                }
+            if (selectedFile){
+                handleUpload().then(function(){
+                    uploadPlant()
+                });
             }else{
-                const result = await plantService.update(props.id, plant);
-                if(result.status === true){
-                    alert(result.message);
-                    props.savePlant()
-                }
-            }            
+                uploadPlant()
+            }                      
         } else {
             setError(true);
             setErrorText("Please fill all fields.");
@@ -68,7 +106,25 @@ const Plant = (props) => {
     return (
         <>
             <div className={styles.plantsContainer}>
-                <div className={styles.modalImage}></div>
+                <label className={styles.modalImage}>
+                    <input
+                        type="file"
+                        accept="image/png, image/gif, image/jpeg"
+                        hidden
+                        onChange={({ target }) => {
+                            if (target.files) {
+                                const file = target.files[0];
+                                setSelectedImage(URL.createObjectURL(file));
+                                setSelectedFile(file);
+                            }
+                        }}
+                    />
+                    {selectedImage ? (
+                        <img src={selectedImage} alt="profile" />
+                    ) : (
+                        <img src={plant.image ? "/assets/upload/" + plant.image : ""} alt="image" />
+                    )}
+                </label>
                 <div className={styles.inputContainer}>
                     <input
                         type="text"

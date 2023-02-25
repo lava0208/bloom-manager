@@ -33,6 +33,7 @@ export default async function handler(req, res) {
                         name: req.body.name,
                         species: req.body.species,
                         description: req.body.description,
+                        image: req.body.image,
                         direct_sow_early: req.body.direct_sow_early,
                         direct_sow_late: req.body.direct_sow_late,
                         earliest_seed: req.body.earliest_seed,
