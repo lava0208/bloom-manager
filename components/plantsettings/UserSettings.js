@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { userService, planService } from "services";
+import moment from "moment";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { GoogleMap, LoadScript } from '@react-google-maps/api';
@@ -35,6 +36,10 @@ const UserSettings = (props) => {
         }
     }
 
+     const dateFormat = (date) =>{
+        return moment(date).format("YYYY/MM/DD")
+     }
+
     const saveSetting = async () => {
         if (confirm('Do you want to update your plan?')) {
             const result = await planService.update(userService.getId(), userSettings);
@@ -49,11 +54,12 @@ const UserSettings = (props) => {
             <div className={styles.userSettingsPaper}>
                 <div className={styles.userSettingsOptionsContainer}>
                     <h2 className="text-center">{userSettings && userSettings.name ? userSettings.name : "2023 Plan Settings"}</h2>
-                    <div className={styles.userSettingsInputRow}>                    
+                    <div className={styles.userSettingsInputRow}>  
                         <DatePicker
                             placeholder="Last Frost"
-                            selected={userSettings.last_frost}
-                            value={userSettings.last_frost}
+                            value={dateFormat(userSettings.last_frost)}
+                            selected={new Date(userSettings.last_frost)}
+                            format='YYYY/MM/DD'
                             onChange={(e) => {
                                 setUserSettings({
                                     ...userSettings,
@@ -65,8 +71,9 @@ const UserSettings = (props) => {
                     <div className={styles.userSettingsInputRow}>
                         <DatePicker
                             placeholder="First Frost"
-                            selected={userSettings.first_frost}
-                            value={userSettings.first_frost}
+                            value={dateFormat(userSettings.first_frost)}
+                            selected={new Date(userSettings.first_frost)}
+                            format='YYYY/MM/DD'
                             onChange={(e) => {
                                 setUserSettings({
                                     ...userSettings,
