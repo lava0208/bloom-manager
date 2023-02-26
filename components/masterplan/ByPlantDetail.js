@@ -1,6 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useState, useEffect } from "react";
 import moment from "moment";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 import { plantService, taskService } from "services";
 
@@ -22,10 +24,14 @@ const ByPlantDetail = (props) => {
         setTaskArr(_tasks.data)
     }
 
+    const dateFormat = (date) =>{
+        return moment(date).format("YYYY/MM/DD")
+    }
+
     const [customTask, setCustomTask] = useState({
         planting_id: props.plantingId,
         title: "",
-        scheduled_at: "",
+        scheduled_at: moment().format('YYYY/MM/DD'),
         duration: "",
         note: "",
         type: "",
@@ -43,10 +49,10 @@ const ByPlantDetail = (props) => {
                 ...taskArr, {
                     planting_id: props.plantingId,
                     title: "",
-                    scheduled_at: "",
+                    scheduled_at: moment().format('YYYY/MM/DD'),
                     duration: "",
                     note: "",
-                    type: "",
+                    type: "incomplete",
                     rescheduled_at: "",
                     completed_at: ""
                 }
@@ -104,14 +110,15 @@ const ByPlantDetail = (props) => {
                             });
                         }}
                     />
-                    <input
-                        type="text"
-                        placeholder="Date"
-                        value={customTask.scheduled_at}
+                    <DatePicker
+                        placeholderText="Date"
+                        className={customTask.scheduled_at}
+                        value={dateFormat(customTask.scheduled_at)}
+                        selected={new Date(customTask.scheduled_at)}
                         onChange={(e) => {
                             setCustomTask({
                                 ...customTask,
-                                scheduled_at: e.target.value,
+                                scheduled_at: e,
                             });
                         }}
                     />
@@ -137,7 +144,7 @@ const ByPlantDetail = (props) => {
                             });
                         }}
                     />
-                    <button onClick={() => addCustomTask()}>Add</button>
+                    <button className={styles.add} onClick={() => addCustomTask()}>Add</button>
                 </div>
             </div>
             <div className={styles.plantOptionsContainer}>

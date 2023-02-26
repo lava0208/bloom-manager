@@ -25,6 +25,7 @@ const CurrentPlan = (props) => {
         seeds: "",
         harvest: "",
         direct_sow: false,
+        direct_indoors: false,
         pinch: false,
         pot_on: false,
         succession: "",
@@ -109,7 +110,7 @@ const CurrentPlan = (props) => {
                         <h4>Seeding</h4>
                         {seeds.map((element, i) => (
                             <button key={i} 
-                                onClick={() => {setActiveSeed(element.value), setPlanting({...planting, direct_sow: element.value === 1 ? true : false})}} 
+                                onClick={() => {setActiveSeed(element.value), setPlanting({...planting, direct_sow: element.value === 1 ? true : false, direct_indoors: element.value === 1 ? false : true})}}
                                 className={activeSeed === i + 1 ?  styles.selected : ''}
                                 value={planting.direct_sow}
                             >

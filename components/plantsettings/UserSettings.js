@@ -36,9 +36,9 @@ const UserSettings = (props) => {
         }
     }
 
-     const dateFormat = (date) =>{
+    const dateFormat = (date) =>{
         return moment(date).format("YYYY/MM/DD")
-     }
+    }
 
     const saveSetting = async () => {
         if (confirm('Do you want to update your plan?')) {
