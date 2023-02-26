@@ -15,7 +15,7 @@ export default async function handler(req, res) {
         //... get all tasks or task by id
         case "GET":
             if(req.query.id){
-                let task = await db.collection("tasks").findOne({_id: new ObjectId(req.query.id)});
+                let task = await db.collection("tasks").findOne({_id: req.query.id});
                 return res.json({ status: true, data: task });
             }else if(req.query.plantingid){
                 let tasks = await db.collection("tasks").find({planting_id: req.query.plantingid}).toArray();

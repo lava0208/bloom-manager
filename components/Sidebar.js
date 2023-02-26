@@ -30,6 +30,10 @@ const Sidebar = () => {
     const [name, setName] = useState("");
     const size = useWindowSize();
 
+    useEffect(() => {
+        getUserPlan();
+    }, [])
+
     const getUserPlan = async () => {
         const user = await userService.getById(userService.getId());
         if (user.data !== null) {
