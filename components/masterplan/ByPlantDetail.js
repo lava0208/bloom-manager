@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useState, useEffect } from "react";
 import moment from "moment";
 
@@ -77,7 +78,13 @@ const ByPlantDetail = (props) => {
             </div>
             <div className={styles.plantInfoContainer}>
                 <div className={styles.detailContainer}>
-                    <div className={styles.detailImage}></div>
+                    <div className={styles.detailImage}>
+                        {
+                            plant.image && (
+                                <img src={"/assets/upload/" + plant.image } alt="image" />
+                            )
+                        }
+                    </div>
                     <div className={styles.detailInfo}>
                         <h3>{plant.name}</h3>
                         <h5>{plant.species}</h5>

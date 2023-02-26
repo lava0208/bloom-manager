@@ -1,5 +1,11 @@
 import clientPromise from "../../lib/mongodb";
 import { ObjectId } from "mongodb";
+import { plantService } from "services";
+
+async function getPlantImg(id){
+    const _plant = await plantService.getById(id);
+    return _plant.data.image;
+}
 
 export default async function handler(req, res) {
     const client = await clientPromise;
@@ -21,6 +27,13 @@ export default async function handler(req, res) {
         case "GET":
             if(req.query.id === undefined){
                 let plantings = await db.collection("plantings").find({}).toArray();
+                await Promise.all(plantings.map(async (elem) => {
+                    try {
+                      elem.image = await getPlantImg(elem.plant_id)  
+                    } catch (error) {
+                      console.log('error'+ error);
+                    }
+                }))
                 return res.json({ status: true, data: plantings });
             }else{
                 let plan = await db.collection("plantings").findOne({_id: new ObjectId(req.query.id)});
