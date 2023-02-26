@@ -91,15 +91,15 @@ export default async function handler(req, res) {
             let existOne = await db.collection("plantings").find({plan_id: req.body.plan_id, plant_id: req.body.plant_id}).toArray();
             if(existOne.length === 0){
                 //... insert planting
-                // await db.collection("plantings").insertOne(req.body);
+                await db.collection("plantings").insertOne(req.body);
                 
                 //... insert automatic tasks
                 let _plant = await getPlantById(req.body.plant_id);
                 let _plan = await getPlanById(req.body.plan_id);
 
-                await plantingService.create(createTasks(req.body, _plant, _plan));
+                await taskService.create(createTasks(req.body, _plant, _plan));
 
-                return res.json({ status: true, message: 'Planting is created successfully.' });
+                return res.json({ status: true, message: 'Planting is created successfully. Refresh the page.' });
             }else{
                 return res.json({ status: false, message: 'The Planting was already planed.' });
             }
@@ -146,7 +146,7 @@ export default async function handler(req, res) {
             //... insert automatic tasks
             let _plant = await getPlantById(req.body.plant_id);
             let _plan = await getPlanById(req.body.plan_id);
-            
+
             await taskService.update(req.query.id , createTasks(req.body, _plant, _plan));
 
             return res.json({ status: true, message: 'Planting is updated successfully.' });
