@@ -49,13 +49,13 @@ const CurrentPlan = (props) => {
     //... get plan nand planting
     const [plant, setPlant] = useState({});
     const getPlantAndPlanting = async () => {
+        console.log(userService.getId());
         var _plan = await planService.getByUserId(userService.getId());
         var _plant = await plantService.getById(props.plantId);
-        
         var _planting = { ...planting };
-        _planting.plan_id = _plan.data._id;
-        _planting.name = _plant.data.name;
-        _planting.species = _plant.data.species;
+        _planting.plan_id = _plan ? _plan.data._id : "";
+        _planting.name = _plant ? _plant.data.name : "";
+        _planting.species = _plant ? _plant.data.species : "";
         setPlant(_plant.data);
         setPlanting(_planting);
     }

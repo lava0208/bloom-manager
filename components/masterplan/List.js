@@ -23,9 +23,11 @@ const List = () => {
     const cancelSchedule = () => {
         setModalOpen(false);
     }
+    const [taskId, setTaskId] = useState("");
     const openSchedule = (event) => {
         setModalOpen(true)
         setEvent(event)
+        setTaskId(event._id);
     }
 
     const [todayTasks, setTodayTasks] = useState([]);
@@ -53,7 +55,7 @@ const List = () => {
                 </h2>
                 <div className={styles.tasksScrollContainer}>
                     {overdueTasks.map((task, i) => (
-                        <div className={styles.taskContainer} key={i}>
+                        <div className={styles.taskContainer} key={i} onClick={() => openSchedule(task)}>
                             <div className={styles.taskInfo}>
                                 <h2>{task.title}</h2>
                                 <h3 className={styles.overdue}>
@@ -89,7 +91,7 @@ const List = () => {
                 <h2 className={`${styles.tasksContainerTitle} `}>Tomorrow</h2>
                 <div className={styles.tasksScrollContainer}>
                     {tomorrowTasks.map((task, i) => (
-                        <div className={styles.taskContainer} key={i}>
+                        <div className={styles.taskContainer} key={i} onClick={() => openSchedule(task)}>
                             <div className={styles.taskInfo}>
                                 <h2>{task.title}</h2>
                                 <h3>Tomorrow</h3>
@@ -112,7 +114,7 @@ const List = () => {
             </div>
             <Modal toggle={() => setModalOpen(!modalOpen)} isOpen={modalOpen} centered modalClassName="modifyPlanModal">
                 <ModalBody>
-                    <CalendarDetail schedule = {event} saveSchedule={saveSchedule} cancelSchedule={cancelSchedule} />
+                    <CalendarDetail taskId={taskId} schedule = {event} saveSchedule={saveSchedule} cancelSchedule={cancelSchedule} />
                 </ModalBody>
             </Modal>
         </div>

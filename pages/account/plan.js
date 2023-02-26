@@ -2,20 +2,12 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { userService, planService } from "services";
-import { GoogleMap, LoadScript } from '@react-google-maps/api';
+import GoogleMapReact from 'google-map-react';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import styles from "~styles/pages/account/register.module.scss";
 
-const containerStyle = {
-    width: '100%',
-    height: '150px'
-};
-
-const center = {
-    lat: -3.745,
-    lng: -38.523
-};
+const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
 const Plan = () => {
     const [plan, setPlan] = useState({
@@ -44,6 +36,14 @@ const Plan = () => {
             setError(true);
         }
     }
+
+    const defaultProps = {
+        center: {
+            lat: 10.99835602,
+            lng: 77.01502627
+        },
+        zoom: 11
+    };
 
     return (
         <div className={styles.screen}>
@@ -92,18 +92,19 @@ const Plan = () => {
                         />
                     </div>
                     <div className={styles.detailsLocationContainer}>
-                        <LoadScript
-                            googleMapsApiKey={process.env.GOOGLE_MAP_KEY}
-                        >
-                            <GoogleMap
-                                mapContainerStyle={containerStyle}
-                                center={center}
-                                zoom={10}
+                        <div style={{ height: '150px', width: '100%' }}>
+                            <GoogleMapReact
+                                bootstrapURLKeys={{ key: "AIzaSyBViecdl6O87Q7WXPt08wLpyYx-SivFa-U" }}
+                                defaultCenter={defaultProps.center}
+                                defaultZoom={defaultProps.zoom}
                             >
-                                { /* Child components, such as markers, info windows, etc. */}
-                                <></>
-                            </GoogleMap>
-                        </LoadScript>
+                                <AnyReactComponent
+                                    lat={59.955413}
+                                    lng={30.337844}
+                                    text="My Marker"
+                                />
+                            </GoogleMapReact>
+                        </div>
                     </div>
                 </div>
 
@@ -118,11 +119,11 @@ const Plan = () => {
                         });
                     }}
                 />
-                
+
                 <DatePicker
                     placeholder="First Frost date"
                     className={styles.input}
-                    selected={plan.first_frost} 
+                    selected={plan.first_frost}
                     onChange={(e) => {
                         setPlan({
                             ...plan,
