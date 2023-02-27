@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { userService, planService } from "services";
-import GoogleMapReact from 'google-map-react';
+import GoogleMap from "./google-map";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import styles from "~styles/pages/account/register.module.scss";
@@ -11,7 +11,7 @@ const Plan = () => {
     const [plan, setPlan] = useState({
         userid: "",
         name: "",
-        location: "",
+        location: {},
         size: "",
         last_frost: new Date(),
         first_frost: new Date()
@@ -21,7 +21,7 @@ const Plan = () => {
     const router = useRouter();
 
     const register = async () => {
-        if (plan.name !== "" && plan.location !== "" && plan.size !== "") {
+        if (plan.name !== "" && plan.size !== "") {
             plan.userid = userService.getId();
             const result = await planService.create(plan)
             if (result.status === true) {
@@ -35,39 +35,8 @@ const Plan = () => {
         }
     }
 
-    const renderMarkers = (map, maps) => {
-        let marker = new maps.Marker({
-          position: {
-            lat: 59.9554,
-            lng: 30.337844
-          },
-          map,
-          title: 'Hello World!'
-        });
-        return marker;
-      }
-    
-
-    const defaultProps = {
-        center: {
-            lat: 10.99835602,
-            lng: 77.01502627
-        },
-        zoom: 11
-    };
-
-    const [position, setPosition] = useState({
-        lat: 59.9554,
-        lng: 30.337844
-    })
-
-
-    const changePosition = (e) => {
-        console.log(e);
-        setPosition({
-            lat: e.lat,
-            lng: e.lng
-        })
+    const getPosition = (e) => {
+        plan.location = e
     }
 
     return (
@@ -95,13 +64,7 @@ const Plan = () => {
                             type="text"
                             className={styles.input}
                             placeholder="Location"
-                            value={plan.location}
-                            onChange={(e) => {
-                                setPlan({
-                                    ...plan,
-                                    location: e.target.value,
-                                });
-                            }}
+                            readOnly
                         />
                         <input
                             type="text"
@@ -116,18 +79,8 @@ const Plan = () => {
                             }}
                         />
                     </div>
-                    <div className={styles.detailsLocationContainer}>
-                        <div style={{ height: '150px', width: '100%' }}>
-                            <GoogleMapReact
-                                bootstrapURLKeys={{ key: "AIzaSyDZfVO29Iytspv4xz7S68doIoiztiRLhbk" }}
-                                defaultCenter={defaultProps.center}
-                                defaultZoom={defaultProps.zoom}
-                                onClick={(e) => changePosition(e)}
-                                onGoogleApiLoaded={({map, maps}) => renderMarkers(map, maps)}
-                                yesIWantToUseGoogleMapApiInternals
-                            >
-                            </GoogleMapReact>
-                        </div>
+                    <div className={styles.detailsLocationContainer + " planMapContainer"}>
+                        <GoogleMap getPosition={getPosition} />
                     </div>
                 </div>
 
