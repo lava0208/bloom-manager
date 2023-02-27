@@ -57,8 +57,21 @@ export default async function handler(req, res) {
 
         //... update a task
         case "PUT":
-            await db.collection("tasks").deleteMany({planting_id: req.query.plantingid});
-            await db.collection("tasks").insertMany(req.body);
+            if(req.query.iscomplete){
+                await db.collection("tasks").updateOne(
+                    {
+                        _id: new ObjectId(req.query.id),
+                    },
+                    {
+                        $set: {
+                            "type": "complete"
+                        },
+                    }
+                );
+            }else{
+                await db.collection("tasks").deleteMany({planting_id: req.query.plantingid});
+                await db.collection("tasks").insertMany(req.body);
+            }
             return res.json({ status: true, message: 'task is updated successfully.' });
 
         //... delete a task

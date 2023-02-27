@@ -7,6 +7,7 @@ export const taskService = {
     getById,
     getByPlantingId,
     update,
+    updateByStatus,
     delete: _delete,
     deleteByPlantingId
 };
@@ -66,6 +67,17 @@ async function getByPlantingId(id) {
 
 async function update(id, params) {
     const response = await fetch(`${baseUrl}?plantingid=` + id, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(params)
+    })
+    return response.json();
+}
+
+async function updateByStatus(id, params) {
+    const response = await fetch(`${baseUrl}?iscomplete=true&id=` + id, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json"

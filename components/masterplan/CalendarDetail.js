@@ -28,7 +28,7 @@ const CalendarDetail = (props) => {
                 setNoNextTask("There is no next task") 
             }else{
                 setNextTask(_nextItem);
-            }            
+            }
         }
     }
 
@@ -80,7 +80,7 @@ const CalendarDetail = (props) => {
                 </div>
             </div>
             <div className={styles.buttonsContainer}>
-                <button onClick={() => props.saveSchedule(props)}>Mark Complete</button>
+                <button onClick={() => props.completeTask(props.taskId)}>Mark Complete</button>
                 <button onClick={props.cancelSchedule}>Cancel</button>
             </div>
         </div>
