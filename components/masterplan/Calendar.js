@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import moment from "moment";
 import { Calendar as BigCalendar, momentLocalizer } from "react-big-calendar";
 import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
 import { Modal, ModalBody } from "reactstrap";
+
+import { taskService } from "services";
 
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import "react-big-calendar/lib/css/react-big-calendar.css";
@@ -58,6 +60,20 @@ const CalendarTab = () => {
             type: "transplant",
         },
     ]);
+
+    const [alltasks, setAllTasks] = useState([]);
+    const [taskId, setTaskId] = useState("");
+    
+    useEffect(() => {
+        getAllTasks();
+    }, [])
+
+    const getAllTasks = async () => {
+        var _result = await taskService.getAllByDate();
+        setAllTasks(_result.data.all);
+    }
+
+    console.log(alltasks);
 
     const Calendar = withDragAndDrop(BigCalendar);
 
@@ -129,7 +145,7 @@ const CalendarTab = () => {
         <div className={styles.container}>
             <Calendar
                 localizer={localizer}
-                events={events}
+                events={alltasks}
                 onEventDrop={onEventDrop}
                 eventPropGetter={eventStyleGetter}
                 onEventResize={onEventResize}

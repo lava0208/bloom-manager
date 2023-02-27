@@ -7,8 +7,6 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import styles from "~styles/pages/account/register.module.scss";
 
-const AnyReactComponent = ({ text }) => <div>{text}</div>;
-
 const Plan = () => {
     const [plan, setPlan] = useState({
         userid: "",
@@ -37,6 +35,19 @@ const Plan = () => {
         }
     }
 
+    const renderMarkers = (map, maps) => {
+        let marker = new maps.Marker({
+          position: {
+            lat: 59.9554,
+            lng: 30.337844
+          },
+          map,
+          title: 'Hello World!'
+        });
+        return marker;
+      }
+    
+
     const defaultProps = {
         center: {
             lat: 10.99835602,
@@ -44,6 +55,20 @@ const Plan = () => {
         },
         zoom: 11
     };
+
+    const [position, setPosition] = useState({
+        lat: 59.9554,
+        lng: 30.337844
+    })
+
+
+    const changePosition = (e) => {
+        console.log(e);
+        setPosition({
+            lat: e.lat,
+            lng: e.lng
+        })
+    }
 
     return (
         <div className={styles.screen}>
@@ -94,15 +119,13 @@ const Plan = () => {
                     <div className={styles.detailsLocationContainer}>
                         <div style={{ height: '150px', width: '100%' }}>
                             <GoogleMapReact
-                                bootstrapURLKeys={{ key: "AIzaSyBViecdl6O87Q7WXPt08wLpyYx-SivFa-U" }}
+                                bootstrapURLKeys={{ key: "AIzaSyDZfVO29Iytspv4xz7S68doIoiztiRLhbk" }}
                                 defaultCenter={defaultProps.center}
                                 defaultZoom={defaultProps.zoom}
+                                onClick={(e) => changePosition(e)}
+                                onGoogleApiLoaded={({map, maps}) => renderMarkers(map, maps)}
+                                yesIWantToUseGoogleMapApiInternals
                             >
-                                <AnyReactComponent
-                                    lat={59.955413}
-                                    lng={30.337844}
-                                    text="My Marker"
-                                />
                             </GoogleMapReact>
                         </div>
                     </div>
