@@ -5,8 +5,6 @@ import { Modal, ModalBody } from "reactstrap";
 
 import { taskService } from "services";
 
-import { dummyList } from "~lib/dummy";
-
 import 'bootstrap/dist/css/bootstrap.css';
 import styles from "~styles/components/masterplan/list.module.scss";
 
@@ -70,7 +68,7 @@ const List = () => {
             <div className={styles.tasksContainer}>
                 <h2 className={`${styles.tasksContainerTitle} `}>Today</h2>
                 <div className={styles.tasksScrollContainer}>
-                    {dummyList.today.map((task, i) => (
+                    {todayTasks.map((task, i) => (
                         <div className={styles.taskContainer} key={i} onClick={() => openSchedule(task)}>
                             <div className={styles.taskInfo}>
                                 <h2>{task.title}</h2>

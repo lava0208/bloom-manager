@@ -21,7 +21,23 @@ const ByPlantDetail = (props) => {
         var _plant = await plantService.getById(props.plantId);
         setPlant(_plant.data);
         var _tasks = await taskService.getByPlantingId(props.plantingId);
-        setTaskArr(_tasks.data)
+        var _taskArr = [];
+        _tasks.data.forEach(element => {
+            var _taskObj = {
+                planting_id: props.plantingId,
+                id: element._id,
+                title: element.title,
+                scheduled_at: element.scheduled_at,
+                duration: element.duration,
+                note: element.note,
+                type: element.type,
+                rescheduled_at: element.rescheduled_at,
+                completed_at: element.completed_at
+            }
+            _taskArr.push(_taskObj)
+        });
+        console.log(_taskArr);
+        setTaskArr(_taskArr)
     }
 
     const dateFormat = (date) =>{
@@ -34,7 +50,7 @@ const ByPlantDetail = (props) => {
         scheduled_at: moment().format('YYYY/MM/DD'),
         duration: "",
         note: "",
-        type: "",
+        type: "incomplete",
         rescheduled_at: "",
         completed_at: ""
     });
@@ -123,7 +139,7 @@ const ByPlantDetail = (props) => {
                         }}
                     />
                     <input
-                        type="text"
+                        type="number"
                         placeholder="Duration"
                         value={customTask.duration}
                         onChange={(e) => {
@@ -176,7 +192,7 @@ const ByPlantDetail = (props) => {
                             </select>
                             <div className={styles.buttons}>
                                 {/* <button>Duplicate</button>  */}
-                                <button onClick={() => deleteTask(task._id)}>Delete</button>
+                                <button onClick={() => deleteTask(task.id)}>Delete</button>
                             </div>
                         </div>
                     </div>

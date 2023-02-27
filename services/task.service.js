@@ -7,7 +7,8 @@ export const taskService = {
     getById,
     getByPlantingId,
     update,
-    delete: _delete
+    delete: _delete,
+    deleteByPlantingId
 };
 
 const baseUrl = `${apiUrl}/tasks`;
@@ -76,6 +77,16 @@ async function update(id, params) {
 
 async function _delete(id) {
     const response = await fetch(`${baseUrl}?id=` + id, {
+        method: "Delete",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+    return response.json();
+}
+
+async function deleteByPlantingId(id) {
+    const response = await fetch(`${baseUrl}?plantingid=` + id, {
         method: "Delete",
         headers: {
             "Content-Type": "application/json"

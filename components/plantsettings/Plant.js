@@ -76,6 +76,7 @@ const Plant = (props) => {
         if(props.id === 0){
             const result = await plantService.create(plant);
             if(result.status === true){
+                alert(result.message);
                 props.savePlant()
             }
         }else{
