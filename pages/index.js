@@ -73,7 +73,7 @@ const Dashboard = () => {
                         <h3>OVERDUE TASKS</h3>
                     </div>
                     <div className={`${styles.statContainer} ${styles.wide}`}>
-                        <h2>{seasonTasks[0].sum}</h2>
+                        <h2>{seasonTasks && seasonTasks.length > 0 ? seasonTasks[0].sum : 0}</h2>
                         <h3>PLANTS THIS SEASON</h3>
                     </div>
                 </div>

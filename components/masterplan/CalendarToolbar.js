@@ -7,7 +7,6 @@ import styles from "~styles/components/masterplan/calendartoolbar.module.scss";
 const CalendarToolbar = (props) => {
     const [currentMonth, setCurrentMonth] = useState(0);
 
-    console.log(currentMonth);
     useEffect(() => {
         setCurrentMonth(props.date.getMonth());
     }, [props]);
