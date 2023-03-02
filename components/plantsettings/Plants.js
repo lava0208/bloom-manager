@@ -72,7 +72,7 @@ const Plants = () => {
                 <div className={styles.addCustomContainer} onClick={() => openModal("create")}>
                     <button>Add New Custom</button>
                 </div>
-                <input className={styles.searchButton} placeholder={'Search'} onChange={(e) => setQuery(e.target.value)} />
+                <input className={styles.searchButton} placeholder={'Search'} onChange={(e) => setQuery((e.target.value).toLowerCase())} />
             </div>
             <div className={styles.plantsContainer}>
                 {filteredArray.map((plant, i) => (
