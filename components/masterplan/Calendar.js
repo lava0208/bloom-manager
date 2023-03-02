@@ -15,6 +15,8 @@ import styles from "~styles/components/masterplan/calendar.module.scss";
 import CalendarToolbar from "~components/masterplan/CalendarToolbar";
 import CalendarDetail from "./CalendarDetail";
 
+const Calendar = withDragAndDrop(BigCalendar);
+
 const CalendarTab = () => {
     const [alltasks, setAllTasks] = useState([]);
     const [taskId, setTaskId] = useState("");
@@ -43,7 +45,6 @@ const CalendarTab = () => {
         });
         setAllTasks(taskArr)
     }
-    const Calendar = withDragAndDrop(BigCalendar);
 
     const localizer = momentLocalizer(moment);
 
